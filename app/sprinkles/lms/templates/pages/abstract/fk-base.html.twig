@@ -1,0 +1,84 @@
+{# This is the base layout template for all pages.  #}
+{% block page %}
+<!DOCTYPE html>
+<html lang="{{ currentLocale }}">
+	{% block head %}
+		<head>
+			<!-- The 'X-UA-Compatible' tag must be first, otherwise IE will not respect it.  See http://stackoverflow.com/questions/25557299/internet-explorer-11-disable-display-intranet-sites-in-compatibility-view-via -->
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta charset="utf-8">
+			<meta name="generator" content="UserFrosting"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+			<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'G-8LPLW2PXBK');
+			</script>
+			<title>{{ site.title }}
+				|
+				{% block page_title %}New Page
+				{% endblock %}
+			</title>
+
+			{% include "pages/partials/favicons.html.twig" %}
+
+			{# Use this block to add extra content in page head without having to override the entire base layout #}
+			{% block head_extra %}{% endblock %}
+
+			{% block stylesheets %}
+				{# Override this block in a child layout template or page template to override site-level stylesheets. #}
+				{% block stylesheets_site %}
+					<!-- Include main CSS asset bundle -->
+					<!--{{ assets.css() | raw }}-->
+					<link href="{{ assets.url('assets://lms/css/output.css') }}" rel="stylesheet">
+					
+				{% endblock %}
+			{% endblock %}
+
+			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+			<!--[if lt IE 9]>
+																	                <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+																	                <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+																	            <![endif]-->
+
+			{% include "pages/partials/analytics.html.twig" %}
+				<script>
+async function fetchAlerts() {
+const response = await fetch("{{ site.uri.public }}/alerts");
+const alerts = await response.json();
+if (alerts.length > 0) {
+var alertsContainer = document.getElementById('alerts');
+alerts.forEach((al) => {
+var newAlert = document.createElement('div');
+switch (al.type) {
+case 'success': newAlert.setAttribute('class', 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative flex justify-between');
+break;
+case 'danger': newAlert.setAttribute('class', 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative flex justify-between');
+break;
+case 'warning': newAlert.setAttribute('class', 'bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded-lg relative flex justify-between');
+break;
+case 'info': newAlert.setAttribute('class', 'bg-gray-100 border border-gray-400 text-gray-700 px-4 py-3 rounded-lg relative flex justify-between');
+break;
+}
+var message = document.createElement('span');
+message.innerHTML = al.message;
+newAlert.appendChild(message);
+var close = document.createElement('p');
+close.innerHTML = 'x';
+close.setAttribute('class', 'cursor-pointer font-bold');
+close.setAttribute("onclick", "this.parentNode.style.display = 'none';");
+newAlert.appendChild(close);
+alertsContainer.appendChild(newAlert);
+});
+}
+}
+		</script>
+	</head>
+	{% endblock %}
+
+	{% block body %}
+		<body {% block body_attributes %} {% endblock %} class="bg-gray-50" onload="fetchAlerts()" {% include "navigation/fk-header.html.twig" %} {% block content %} {% endblock %} {# Handlebars template for uf-alerts. #} {% block uf_alerts_template %} {% include "pages/partials/alerts.html.twig" %} {% endblock %} <!-- Javascript configuration --> <script> {% include "pages/partials/config.js.twig" %} </script> {% block scripts %} {# Override this block in a child layout template or page template to override site-level scripts. #} {% block scripts_site %} {% endblock %} {# Override this block in a child layout template or page template to specify or override scripts for groups of similar pages. #} {% block scripts_page_group %} {% endblock %} {# Override this block in a child layout template or page template to specify or override page-level scripts. #} {% block scripts_page %} {% endblock %} {% endblock %} {% include "pages/partials/fk-footer.html.twig" %} </body> {% endblock %} </html> {% endblock %}

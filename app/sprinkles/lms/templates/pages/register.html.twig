@@ -1,0 +1,120 @@
+{% extends "pages/abstract/fk-base.html.twig" %}
+{% block page_title %}Register
+				{% endblock %}
+{% block content %}
+
+	
+	<section class="mx-auto w-full ">
+		<div class="justify-between mx-auto max-w-7xl mt-12 space-y-6 ">
+			<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
+				<div class="bg-gray-50 rounded-lg p-10">
+					<h1 class="text-[#331E36] font-semibold text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">{{translate('REGISTER')}}</h1>
+					<div id="alerts"></div>
+					<form id="register" role="form" action="{{site.uri.public}}/account/register" method="post" class="flex flex-col space-y-5 r-form">
+						{% include "forms/csrf.html.twig" %}
+						<div class="flex flex-col space-y-1">
+							<label class="text-gray-700" for="r-form-first-name">{{translate('FIRST_NAME')}}</label>
+							<input type="text" name="first_name" required="required" placeholder="{{translate('FIRST_NAME')}}" class="border border-gray-300 px-2 py-2 rounded-md" id="r-form-first-name" autocomplete="off">
+						</div>
+						<div class="flex flex-col space-y-1">
+							<label class="text-gray-700" for="r-form-last-name">{{translate('LAST_NAME')}}</label>
+							<input type="text" name="last_name" required="required" placeholder="{{translate('LAST_NAME')}}" class="border border-gray-300 px-2 py-2 rounded-md" id="r-form-last-name" autocomplete="off">
+						</div>
+						<div class="flex flex-col space-y-1">
+							<label class="text-gray-700" for="r-form-email">Email</label>
+							<input type="text" name="email" required="required" placeholder="{% if site.registration.require_email_verification %}{{translate('EMAIL.VERIFICATION_REQUIRED')}}{% else %}{{translate('EMAIL.YOUR')}}{% endif %}" class="border border-gray-300 px-2 py-2 rounded-md" id="r-form-email">
+						</div>
+						<div class="flex flex-col space-y-1">
+							<label for="r-form-username" class="text-gray-700">{{translate('USERNAME')}}</label>
+							<input type="text" name="user_name" required="required" placeholder="{{translate('USERNAME.CHOOSE')}}" class="border border-gray-300 px-2 py-2 rounded-md" id="r-form-username" autocomplete="off">
+						</div>
+						<div class="flex flex-col space-y-1">
+							<label for="r-form-password" class="text-gray-700">{{translate('PASSWORD')}}</label>
+							<input type="password" name="password" required="required" placeholder="{{translate('PASSWORD.BETWEEN', {min: site.password.length.min, max: site.password.length.max})}}" class="border border-gray-300 px-2 py-2 rounded-md" id="r-form-password">
+						</div>
+						<div class="flex flex-col space-y-1">
+							<label class="text-gray-700" for="r-form-passwordc">{{translate('PASSWORD.CONFIRM')}}</label>
+							<input type="password" name="passwordc" required="required" placeholder="{{translate('PASSWORD.CONFIRM')}}" class="border border-gray-300 px-2 py-2 rounded-md" id="r-form-passwordc">
+						</div>
+						{% if 'locale' not in fields.hidden %}
+
+							<label for="r-form-locale" class="hidden">{{translate("LOCALE")}}</label>
+							<select id="r-form-locale" class="hidden js-select2" name="locale">
+								{% for option, label in locales.available %}
+									{% if label is not empty %}
+										<option value="{{option}}" {% if (option == locales.current) %} selected {% endif %}>{{label}}</option>
+									{% endif %}
+								{% endfor %}
+							</select>
+						{% endif %}
+						{% if site.registration.captcha %}
+							<div class="form-group">
+								<label class="sr-only" for="r-form-passwordc">{{translate('CAPTCHA.VERIFY')}}</label>
+								<div class="row">
+									<div class="col-md-6">
+										<input type="text" name="captcha" placeholder="{{translate('CAPTCHA.SPECIFY')}}" class="form-control" id="r-form-captcha">
+									</div>
+									<div class="col-md-6 form-col-captcha">
+											<img src="{{site.uri.public}}/account/captcha" id="captcha" data-target="#r-form-captcha">
+									</div>
+								</div>
+							</div>
+						{% endif %}
+						<input name="spiderbro" id="spiderbro" class="hidden" value="http://"/>
+						<div class="text-left">
+						By registering an account with Football Knockout, you accept the <a href="{{site.uri.public}}/legal" target="_blank" class="underline">terms and conditions.</a>
+							
+						</div>
+						<div>
+							<button type="submit" class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">{{translate('REGISTER_ME')}}</button>
+						</div>
+						<p id="errorMessage" class="hidden text-red-400">Sorry, an account could not be created. Please check the captcha is correct and passwords match.</p>
+						<div class="">
+							Already have an account? <a href="{{site.uri.public}}/account/sign-in" class="underline">Sign in Here</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block scripts_page %}
+	<!-- Include validation rules -->
+	<script>
+		{% include "pages/partials/page.js.twig" %}</script>
+<script>
+      const form = document.getElementById("register");
+
+      async function sendData() {
+        document.getElementById('errorMessage').classList.add('hidden');
+        // Associate the FormData object with the form element
+
+        const formData = new FormData(form);
+        
+        try {
+          const response = await fetch("/account/register", {
+          method: "POST",
+          // Set the FormData instance as the request body
+          body: formData,
+          });
+          if (response.ok){
+            window.location.replace("{{site.uri.public}}/account/sign-in")
+          }else{
+            document.getElementById('errorMessage').classList.remove('hidden');
+          }
+          
+        } catch (e) {
+          //If Couldn't log in:
+          window.location.replace("{{site.uri.public}}/account/register");
+        } 
+      }
+
+      // Take over form submission
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        sendData();
+      });
+</script>
+	
+{% endblock %}

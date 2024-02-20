@@ -1,0 +1,37 @@
+{% extends "pages/abstract/fk-base.html.twig" %}
+{% block page_title %}Create League{% endblock %}
+{% block content %}
+
+	<section class="mx-auto w-full ">
+		<div class="justify-between mx-auto max-w-7xl mt-12 space-y-6 ">
+			<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
+				<div class="bg-gray-50 rounded-lg p-10">
+					<div class="w-full flex justify-between">
+						<h1 class="text-[#331E36] font-semibold text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">Create League</h1>
+						<a href="{{site.uri.public}}/leagues">
+							<button class="px-4 py-2 rounded-md border border-[#331E36] text-[#331E36] text-sm font-semibold uppercase tracking-wider">Back</button>
+						</a>
+					</div>
+					<div id="alerts"></div>
+					<form class="space-y-5" method="POST" action="{{site.uri.public}}/leagues/create-league">
+						{% include "forms/csrf.html.twig" %}
+						<div class="flex flex-col space-y-2">
+							<label class="text-gray-700">League Name</label>
+							<input type="text" name="league_name" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" required/>
+						</div>
+						<div class="flex flex-col space-y-2">
+							<label class="text-gray-700">Start Gameweek</label>
+							<select required name="start_gameweek" class="border border-gray-300 px-5 py-2 rounded border-[#331E36]">
+								{% for gameweek in gameweeks %}
+									<option value="{{gameweek.id}}">{{gameweek.gameweek_number}}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<button class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full">
+							<p>Create</p>
+						</button>
+					</form>
+
+				</div>
+			</section>
+		{% endblock %}

@@ -1,0 +1,29 @@
+<form id="account-settings" role="form" action="{{site.uri.public}}/account/settings" method="post">
+
+        {% include "forms/csrf.html.twig" %}
+
+        {% block settings_profile %}
+            <input type="text" style="display:none">
+            <input type="password" style="display:none">
+            <div class="flex flex-col space-y-2">
+                <label for="input-email" class="text-gray-700">{{translate("EMAIL")}}</label>
+                <input type="text" id="input-email" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" name="email" value="{{current_user.email}}" autocomplete="off" placeholder="{{translate("EMAIL.YOUR")}}" {{page.visibility}}>      
+            </div>
+            <div class="flex flex-col space-y-2">
+                <label for="input-password" class="text-gray-700">{{translate("PASSWORD.NEW")}}</label>
+                    <input type="password" id="input-password" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" name="password" placeholder="{{translate("PASSWORD.BETWEEN", {min: site.password.length.min, max: site.password.length.max})}} ({{translate("OPTIONAL")}})">
+            </div>
+            <div class="flex flex-col space-y-2">
+                <label for="input-passwordc" class="text-gray-700">{{translate("PASSWORD.CONFIRM_NEW")}}</label>
+                <input type="password" id="input-passwordc" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" name="passwordc" placeholder="{{translate("PASSWORD.CONFIRM_NEW_HELP")}}">
+            </div>
+            <div class="flex flex-col space-y-2">
+                <label for="input-passwordcheck" class="text-gray-700">{{translate("PASSWORD.CURRENT")}}</label>
+                <input type="password" id="input-passwordcheck" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" name="passwordcheck" placeholder="{{translate("PASSWORD.CURRENT_EXPLAIN")}}">
+            </div>
+        {% endblock %}
+    <div class="">
+        <button type="submit" class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-fullpx-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full">{{translate('SAVE')}}</button>
+
+    </div>
+</form>

@@ -1,0 +1,96 @@
+{% extends "pages/abstract/fk-base.html.twig" %}
+{% block page_title %}League {{league.league_name}}{% endblock %}
+{% block content %}
+	<section class="mx-auto w-full">
+		<div class="justify-between mx-auto max-w-7xl mt-12 space-y-6 ">
+			<div class="flex w-full justify-between items-center align-center xl:px-0 px-5">
+				<h1 class="text-[#331E36] font-semibold text-2xl tracking-tight" style="font-family: 'MangueiraSemiBold';">League:
+					{{league.league_name}}</h1>
+				<div class="space-x-2">
+					<a href="{{site.uri.public}}/leagues">
+						<button class="px-2 py-2 rounded-md border border-[#331E36] text-[#331E36] text-sm font-semibold uppercase tracking-wider">Back</button>
+					</a>
+				</div>
+			</div>
+			<div id="alerts"></div>
+			<div class="flex space-x-10 xl:px-0 px-5">
+				{% if league.admin_user_id == current_user.id %}
+					{% set active_players = 0 %}
+					{% set won_player = 0 %}
+					{% for ru in round_users %}
+						{% if ru.user_status == 'active' %}
+							{% set active_players = active_players +1  %}
+						{% endif %}
+						{% if ru.user_status == 'won' %}
+							{% set won_player = won_player + 1 %}
+						{% endif %}
+					{% endfor %}
+					{% if (active_players == 0 or won_player > 0) %}
+						<p>This round has finished!</p> 
+						<a href="{{site.uri.public}}/leagues/{{league.id}}/new-round">
+							<button class="px-2 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider  transition-colors duration-200 ease-in-out hover:bg-[#5a3560]">Create new round</button>
+						</a>
+					{% endif %}
+				{% endif %}
+			</div>
+			<div class="relative overflow-x-auto">
+				<table class="w-full text-sm text-left text-gray-500 border-separate">
+					
+					<tbody>
+				{% for ru in round_users %}
+					<tr class="bg-white  my-2">
+						<td class="px-6 py-2 rounded-tl-xl rounded-bl-xl border-t-2 border-l-2 border-b-2 border-[#9CECD5]">{{ru.user_name}}</td>
+						<td class="px-6 py-2 border-t-2 border-b-2 border-[#9CECD5]">
+							{% if ru.user_status == 'active' %}
+								<p class="px-2 py-1 border rounded border-green-200 w-auto text-center bg-green-100">Still in</p>
+							{% elseif ru.user_status == 'won' %}
+								<p class="px-2 py-1 border rounded border-green-200 w-auto text-center bg-green-100">Winner!</p>
+							{% else %}
+								<p class="px-2 py-1 border rounded border-red-200 w-auto text-center bg-red-100">Knocked Out</p>
+							{% endif %}
+						</td>
+						{% for p in picks %}
+							{% if p.user_id == ru.user_id %}
+							<td class="px-6 py-2 border-t-2 border-b-2 border-[#9CECD5] last:border-t-2 last:border-b-2 last:border-r-2 last:rounded-tr-xl last:rounded-br-xl last:border-[#9CECD5]">
+								<div class="flex  items-center justify-around">
+									<div class="flex items-center">
+										<span class="flex-shrink-0 ">
+											{% for t in teams %}
+												{% if t.id == p.team_id %}
+													<img src="https://res.cloudinary.com/dvxfsaa5t/image/upload/f_auto,q_auto/v1/FootballKnockout/{{t.image_name}}" class="h-10 w-10">
+												{% endif %}
+											{% endfor %}
+										</span>
+										<span class="flex-shrink-0 ">
+										{% if p.result == 'pending' %}
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+											<path stroke-linecap="round" stroke="#331E36" stroke-width="2"  stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+										</svg>
+
+										{% elseif p.result== 'won' %}
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+												<path stroke-linecap="round" stroke="green" stroke-width="2" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+											</svg>
+										{% else %}
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+												<path stroke-linecap="round" stroke="red" stroke-width="2"stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+											</svg>
+										{% endif %}
+										</span>
+									</div>
+								</div>
+							</td>
+							{% endif %}
+						{% endfor %}
+						
+					</tr>
+				{% endfor %}
+				
+					</tbody>
+				</table>
+
+
+			</div>
+		</div>
+	</section>
+{% endblock %} 

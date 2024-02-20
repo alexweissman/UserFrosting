@@ -1,0 +1,54 @@
+{% extends "pages/abstract/dashboard.html.twig" %}
+
+{# Overrides blocks in head of base template #}
+{% block page_title %}Manage Gameweeks{% endblock %}
+{% block page_description %}{% endblock %}
+
+{% block body_matter %}
+    <!-- Info boxes -->
+    {% if checkAccess('fk-manager') %}
+    <div class="row">
+        <div class="col-md-6">
+        <table id="fixtures" class="tablesorter table table-bordered table-hover table-striped">
+					<thead>
+						<tr>
+              <th>Gameweek</th>
+              <th>Status</th>
+              <th>Deadline</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+        {% for gw in gameweeks %}
+          <tr>
+          <td>{{gw.gameweek_number}} (id: {{gw.id}})</td>
+          <td>{% if gw.status == 'complete' %}
+                <span class="label label-success">Complete</span>
+              {% elseif gw.status == 'in progress' %}
+                <span class="label label-warning">In Progress</span>
+              {% else %}
+                <span class="label label-danger">Not Started</span>
+              {% endif %}          
+          </td>
+          <td>{{gw.deadline}}</td>
+          <td><a href="{{site.uri.public}}/gameweek/{{gw.id}}"><button class="btn btn-sm btn-success">Go</button></a></tr>
+          </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        </div>
+    </div>
+    {% endif %}
+    <!-- /.row -->
+{% endblock %}
+
+{% block scripts_page %}
+    <!-- Include page variables -->
+    <script>
+    {% include "pages/partials/page.js.twig" %}
+    </script>
+
+    <!-- Include page-specific JS -->
+    {{ assets.js('js/pages/dashboard') | raw }}
+
+{% endblock %}

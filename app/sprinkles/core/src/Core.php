@@ -122,6 +122,7 @@ class Core extends Sprinkle
      */
     public function onAppInitialize(Event $event)
     {
+        \Sentry\init(['dsn' => 'https://aef196fffd536d1d376f9d5ac3ae3d99@o403848.ingest.sentry.io/4506621390487552' ]);
         $this->ci->router->loadRoutes($event->getApp());
     }
 

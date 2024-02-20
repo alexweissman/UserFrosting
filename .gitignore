@@ -83,3 +83,9 @@ api/
 # Igore npm lockfile
 build/package-lock.json
 build/package.lock
+
+# Igore node_modules
+node_modules/*
+docker/*
+app/tests/*
+app/sprinkles/core/vendor/*

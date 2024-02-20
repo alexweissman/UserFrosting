@@ -1,0 +1,209 @@
+{% extends "pages/abstract/dashboard.html.twig" %}
+
+{# Overrides blocks in head of base template #}
+{% block page_title %}My Leagues{% endblock %}
+{% block page_description %}{% endblock %}
+
+{% block body_matter %}
+
+            <div class="w-full m-3 flex space-x-5">
+                <button class="flex bg-green-800 text-white px-8 py-4 border border-green-900 space-x-3 rounded-lg items-center hover:bg-green-700 active:bg-green-900" onclick="openNewLeagueModal()">
+                    <p>New League</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                </button>
+                <button class="flex bg-orange-800 text-white px-8 py-4 border border-orange-900 space-x-3 rounded-lg items-center hover:bg-orange-700 active:bg-orange-900" onclick="openJoinLeagueModal()">
+                    <p>Join League</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                </button>
+            </div>
+            {% for league in leagues %}
+                {% set ko = false %}
+                {% for pick in picks %}
+                    {% if league.id == pick.league_id %}
+                        {% if pick.result == 'lost'%}
+                            {% set ko = true %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% if league.start_gameweek == currentGameweek %}
+                    {% set ko = false %}
+                {% endif %}
+                <div class="bg-white m-3 px-8 py-4 w-full rounded-xl shadow-lg">
+                    <div class="flex justify-around items-center">
+                        <h2 class="mt-5 text-3xl">{{league.league_name}}</h2>
+                        <div class="mt-5">
+                            Gameweek {{ currentGameweek }} | Deadline 
+                            {% for gameweek in gameweeks %}
+                                {% if gameweek.id == currentGameweek %}
+                                    {{gameweek.deadline|date("d/m/y")}}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="flex mt-5">
+                            <button id="league-{{league.id}}-more-button" class=" h-16 flex bg-blue-800 text-white px-8 py-4 border border-blue-900 space-x-3 rounded-lg items-center hover:bg-blue-700 active:bg-blue-900" onclick="toggleMore({{league.id}})">
+                                <p>See More</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <button id="league-{{league.id}}-less-button" class="h-16 hidden flex bg-blue-800 text-white px-8 py-4 border border-blue-900 space-x-3 rounded-lg items-center hover:bg-blue-700 active:bg-blue-900" onclick="toggleMore({{league.id}})">
+                                <p>See Less</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                        
+                    </div>
+                    
+                            
+                    <div class="flex mt-10">
+                        <div class="w-full flex">
+                        {% if ko == false %}
+                            <form method="POST" action="{{site.uri.public}}/pick/new">
+                            {% include "forms/csrf.html.twig" %}
+                            <input type="hidden" value="{{league.id}}" name="league" />
+                            <input type="hidden" value="{{currentGameweek}}" name="currentGameweek" />
+                                <table class="table">
+                                    <tr>
+                                        {% for team in teams %}
+                                            <td class="relative hover:bg-blue-500 
+                                                {% for pick in picks %}
+                                                    {% if pick.gameweek_id == currentGameweek %}
+                                                        {% if pick.league_id == league.id %}
+                                                            {% if pick.team_id == team.id %}
+                                                                bg-green-500
+                                                            {% endif %}
+                                                        {% endif %}                                
+                                                    {% endif %}
+                                                {% endfor %}
+                                            " id="cell-{{ league.id }}-{{ team.id }}"><!--<img src="{{ assets.url('assets://lms/images/' ~ team.image_name ~ '') }}" class="aspect-square">-->
+                                                <label><input type="radio" {% for pick in picks %}
+                                                    {% if pick.gameweek_id != currentGameweek %}
+                                                        {% if pick.league_id == league.id %}
+                                                            {% if pick.team_id == team.id %}
+                                                                disabled="disabled"
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %} name="{{league.id}}" class="absolute w-0 h-0" value="{{team.id}}" onclick="newPick({{league.id}}, {{team.id}})"><img src="{{ assets.url('assets://lms/images/' ~ team.image_name ~ '') }}" class="aspect-square
+                                                {% for pick in picks %}
+                                                    {% if pick.gameweek_id != currentGameweek %}
+                                                        {% if pick.league_id == league.id %}
+                                                            {% if pick.team_id == team.id %}
+                                                                grayscale cursor-not-allowed
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                "></label>
+                                            </td>
+                                        {% endfor %}
+                                    </tr>
+                                    <tr>
+                                        {% for team in teams %}
+                                            {% for fixture in fixtures %}
+                                                {% if fixture.gameweek_id == currentGameweek %}
+                                                    {% if fixture.home_team == team.id %}
+                                                        {% for team in teams %}
+                                                            {% if fixture.away_team == team.id %}
+                                                                <td class="text-white font-bold"
+                                                                {% if fixture.home_difficulty ==  1 %}
+                                                                        style="background-color: #388e3c;"
+                                                                {% elseif fixture.home_difficulty ==  2 %}
+                                                                        style="background-color: #aed581;"
+                                                                {% elseif fixture.home_difficulty ==  3 %}
+                                                                        style="background-color: rgb(194, 196, 201);"
+                                                                {% elseif fixture.home_difficulty ==  4 %}
+                                                                        style="background-color: rgb(180, 137, 141);"
+                                                                {% elseif fixture.home_difficulty ==  5 %}
+                                                                        style="background-color: rgb(138, 23, 34);"
+                                                                {% endif %}
+                                                                >{{team.team_name_shortened}} (h) </td>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% elseif fixture.away_team == team.id %}
+                                                        {% for team in teams %}
+                                                            {% if fixture.home_team == team.id %}
+                                                                <td class="text-white font-bold"
+                                                                {% if fixture.away_difficulty ==  1 %}
+                                                                        style="background-color: #388e3c;"
+                                                                {% elseif fixture.away_difficulty ==  2 %}
+                                                                        style="background-color: #aed581;"
+                                                                {% elseif fixture.away_difficulty ==  3 %}
+                                                                        style="background-color: rgb(194, 196, 201);"
+                                                                {% elseif fixture.away_difficulty ==  4 %}
+                                                                        style="background-color: rgb(180, 137, 141);"
+                                                                {% elseif fixture.away_difficulty ==  5 %}
+                                                                        style="background-color: rgb(138, 23, 34);"
+                                                                {% endif %}
+                                                                >{{team.team_name_shortened}} (a)</td>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </tr>
+                                </table>
+                                <button type="submit" class="bg-green-800 text-white px-8 py-4 border border-green-900 space-x-3 rounded-lg items-center hover:bg-green-700 active:bg-green-900 hidden" id="new-pick-{{league.id}}-button">
+                                    Confirm new Pick
+                                </button>
+                            </form>
+                            {% else %}
+                         Knocked Out
+                         {% endif %}
+                        </div>
+                    </div>
+                    <div class="hidden border-t px-10 py-5 mt-5 flex flex-col" id="league-{{league.id}}">
+                        People in your league
+                        {% for competitor in competitors %}
+                            {% if competitor.league_id == league.id %}  
+                                {% for user in users %}
+                                    {% if user.id == competitor.user_id %}
+                                        <p>{{ user.first_name}} {{ user.last_name}}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            {% if leagues|length == 0 %}
+                    <div class="w-full m-3">
+                    You're not part of any leagues yet. Start your own above!
+                    </div>
+            {% endif %}
+{% endblock %}
+
+{% block scripts_page %}
+<script>
+    function openNewLeagueModal(product) {
+      $("body").ufModal({
+        sourceUrl: site.uri.public + "/leagues/new"
+      });
+    }
+    function openJoinLeagueModal(product) {
+      $("body").ufModal({
+        sourceUrl: site.uri.public + "/leagues/join"
+      });
+    }
+    function toggleMore(leagueId) {
+        document.getElementById("league-" + leagueId).classList.toggle("hidden");
+        document.getElementById("league-" + leagueId + "-more-button").classList.toggle("hidden");
+        document.getElementById("league-" + leagueId + "-less-button").classList.toggle("hidden");
+    }
+    function newPick(leagueId, teamId){
+        document.getElementById("new-pick-" + leagueId + "-button").classList.remove("hidden");
+        for(var i = 1; i <= 20; i++) {
+            document.getElementById("cell-" + leagueId + "-" + i).classList.remove("bg-green-500");
+        }
+        document.getElementById("cell-" + leagueId + "-" + teamId).classList.add("bg-green-500");
+    }
+</script>
+
+{% endblock %}

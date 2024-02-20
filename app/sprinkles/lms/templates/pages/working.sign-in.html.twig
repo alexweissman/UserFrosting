@@ -1,0 +1,88 @@
+{% extends "pages/abstract/base.html.twig" %}
+
+{# Overrides blocks in head of base template #}
+{% block page_title %}{{translate('SIGNIN')}}{% endblock %}
+
+{% block page_description %}{{translate('PAGE.LOGIN.DESCRIPTION', {'site_name': site.title })}}{% endblock %}
+
+{% block body_attributes %}
+    class="hold-transition login-page"
+{% endblock %}
+
+{% block content %}
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"> </script>
+<div class="mx-auto w-full">
+<div class="justify-between mx-auto max-w-7xl mt-12 space-y-6">
+
+    {% block loginBox %}
+    <div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
+    <div class="bg-gray-50 rounded-lg p-10">
+        <h1 class="text-[#331E36] font-semibold text-4xl tracking-tight w-full text-center">{{translate('SIGNIN')}}</h1>
+
+        <div class="form-alerts" id="alerts-page"></div>
+
+        {% block loginForm %}
+<form action="{{site.uri.public}}/account/login" class="flex flex-col space-y-5" id="sign-in" method="post">
+  {% include "forms/csrf.html.twig" %}
+  <div class="flex flex-col space-y-2">
+    <label for="user_name" class="text-gray-700">User Name</label>
+    <input type="text" class="border border-gray-300 px-2 py-2 rounded-md" placeholder="{% if site.login.enable_email %}{{translate('EMAIL_OR_USERNAME')}}{% else %}{{translate('USERNAME')}}{% endif %}" name="user_name">
+  </div>
+  <div class="flex flex-col space-y-2">
+    <label for="password"  class="text-gray-700">Password</label>
+    <input type="password" class="border border-gray-300 px-2 py-2 rounded-md " placeholder="{{translate('PASSWORD')}}" name="password">
+    
+  </div>
+  <div class="flex items-center mb-4">
+    <input type="checkbox" value="" name="rememberme" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+    <label for="rememberme" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{translate('REMEMBER_ME')}}</label>
+  </div>
+  <!-- /.col -->
+  <button type="submit" class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">
+    <p>Sign In</p>
+  </button>
+  <!-- /.col -->
+
+</form>
+        {% endblock %}
+
+        {% block loginLinks %}
+        <a href="{{site.uri.public}}/account/forgot-password">{{translate('PASSWORD.FORGET')}}</a><br>
+        {% if site.registration.require_email_verification %}
+            <a href="{{site.uri.public}}/account/resend-verification">{{translate('ACCOUNT.VERIFICATION.RESEND')}}</a><br>
+        {% endif %}
+        {% if site.registration.enabled %}
+            <a href="{{site.uri.public}}/account/register">{{translate('REGISTER')}}</a>
+        {% endif %}
+        {% endblock %}
+
+    </div>
+    </div>
+    {% endblock %}
+    <!-- /.login-box-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+{% endblock %}
+
+{% block scripts_page %}
+    <!-- Include validation rules -->
+    <script>
+        {% include "pages/partials/page.js.twig" %}
+    </script>
+
+    <script>
+    site = $.extend(
+        true,               // deep extend
+        {
+            "registration" : {
+                "enabled" : "{{site.registration.enabled}}"
+            }
+        },
+        site
+    );
+    </script>
+
+    <!-- Include page-specific JS -->
+    {{ assets.js('js/pages/sign-in') | raw }}
+{% endblock %}

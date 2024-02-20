@@ -1,0 +1,105 @@
+{% extends "pages/abstract/fk-base.html.twig" %}
+{% block page_title %}My Leagues
+				{% endblock %}
+{% block content %}
+	<section class="mx-auto w-full">
+		<div class="justify-between mx-auto max-w-7xl mt-12 space-y-6 ">
+			<div class="flex w-full flex-col sm:flex-row justify-between items-center  align-center xl:px-0 px-5">
+				<h1 class="text-[#331E36] font-semibold text-xl sm:text-4xl tracking-tight" style="font-family: 'MangueiraSemiBold';">My Leagues</h1>
+				<div class="space-x-2 flex  align-right mt-4 sm:mt-0">
+					<a href="{{site.uri.public}}/leagues/create-league">
+						<button class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider  transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">Create League</button>
+					</a>
+					<a href="{{site.uri.public}}/leagues/join-league">
+						<button class="px-4 py-2 rounded-md border border-[#331E36] text-[#331E36] text-sm font-semibold uppercase tracking-wider  transition-colors duration-400 ease-in-out hover:bg-zinc-100">Join League</button>
+					</a>
+				</div>
+			</div>
+			<div id="alerts"></div>
+			<div class="flex flex-col md:flex-row flex-wrap">
+				{% for league in leagues %}
+					<div class=" {% if leagues|length > 2 %}w-full md:basis-1/2 lg:basis-1/3{% else %} w-full md:w-1/2 lg:w-1/3  {% endif %}   p-3">
+						{% if league.user_status == 'out'  %}
+							<div class="rounded-xl bg-[#D2E0E0] p-1 shadow">
+							{% else %}
+								<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 shadow-xl">
+								{% endif %}
+								<div class="flex flex-col h-full w-full rounded-lg  justify-center bg-gray-50  py-3">
+									<div class="py-6 px-6 flex items-center space-x-2">
+										<img src="https://res.cloudinary.com/dvxfsaa5t/image/upload/f_auto,q_auto/v1/FootballKnockout/powpqfa1i793n5p4v7iy" class="w-12 h-12 border border-gray-200 rounded-full"/>
+										<span class="text-xl font-semibold">{{ league.league_name }}</span>
+									</div>
+									{% if league.user_status == 'out' %}
+										<div class="flex w-full bg-[#E1F0EF] py-3 px-6 justify-around items-center">
+										{% else %}
+											<div class="flex w-full bg-[#C2FC9D] py-3 px-6 justify-around items-center">
+											{% endif %}
+											<div>Gameweek
+												{{ league.gameweek_number }}</div>
+											{% if league.user_status == 'active' %}
+												<div class="bg-gray-50 py-2 px-4 rounded-full text-sm">&#129395; You're In!</div>
+											{% elseif league.user_status == 'won' %}
+												<div class="bg-gray-50 py-2 px-4 rounded-full text-sm">&#127881; You Won!</div>
+											{% else %}
+												<div class="bg-gray-50 py-2 px-4 rounded-full text-sm">&#128532; You're Out</div>
+											{% endif %}
+										</div>
+										<div class="flex w-full py-3 px-12 justify-between items-center font-light">
+											<div class="bg-[#331E36] text-white text-xs rounded px-2 py-1">
+												{% for tp in total_players %}
+													{% if tp.round_id == league.round_id %}
+														{{ tp.count }}
+													{% endif %}
+												{% endfor %}
+											  Started</div>
+											<div class="bg-[#331E36] text-white text-xs rounded px-2 py-1">{% for rp in remaining_players %}
+
+													{% if rp.round_id == league.round_id %}
+														{% if rp.count is null%}
+															0
+														{% else %}
+															{{ rp.count }}
+														{% endif %}
+													{% endif %}
+												{% endfor %} Remaining</div>
+										</div>
+										<div class="flex w-full mt-2 py-1 px-12 justify-between items-center font-light">
+											<div>Next Deadline:
+												{% if league.user_status == 'won' %}
+													Round Complete, your league admin will restart the Round
+												{% else %}
+													{{league.deadline | date("l dS F h:i a")}} }}
+												{% endif %}
+											</div> 
+										</div>
+										<div class="flex flex-col  py-6 px-6 space-y-3">
+											{% for pick in current_picks %}
+												{% if pick.league_id == league.league_id %}
+													<div class="flex items-center space-x-2 px-6">
+														<p>Current Pick:</p>
+														<img src="https://res.cloudinary.com/dvxfsaa5t/image/upload/f_auto,q_auto/v1/FootballKnockout/{{pick.image_name}}" class="h-10 w-10">
+														<p>{{pick.team_name}}</p>
+													</div>
+												{% endif %}
+											{% endfor %}
+											{% if league.user_status == 'active' %}
+												<a href="{{site.uri.public}}/pick/{{league.league_id}}">
+													<button class="bg-[#331E36] text-white w-full py-4 rounded-lg uppercase text-sm font-semibold tracking-wider border border-[#331E36] transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">Make/Change Your Pick</button>
+												</a>
+											{% endif %}
+											
+											<a href="{{site.uri.public}}/leagues/view-league/{{league.league_id}}">
+												<button class="border-[#331E36] border w-full py-4 rounded-lg uppercase text-sm font-semibold tracking-wider transition-colors duration-400 ease-in-out hover:bg-zinc-100">View League</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+						{% if leagues|length == 0 %}
+							You're not in any leagues at the moment, join a league or start your own above!
+						{% endif %}
+					</div>
+				</div>
+			</section>
+		{% endblock %}

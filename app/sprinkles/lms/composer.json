@@ -1,0 +1,10 @@
+{
+  "name": "userfrosting/lms",
+  "type": "userfrosting-sprinkle",
+  "description": "Football Last Man Standing.",
+  "autoload": {
+    "psr-4": {
+      "UserFrosting\\Sprinkle\\Lms\\": "src/"
+    }
+  }
+}

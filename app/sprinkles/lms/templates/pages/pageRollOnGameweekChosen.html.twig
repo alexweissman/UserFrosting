@@ -1,0 +1,134 @@
+{% extends "pages/abstract/dashboard.html.twig" %}
+
+{# Overrides blocks in head of base template #}
+{% block page_title %}Manage Gameweeks
+{% endblock %}
+{% block page_description %}{% endblock %}
+
+{% block body_matter %}
+	<!-- Info boxes -->
+	{% if checkAccess('fk-manager') %}
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Gameweek
+					{{gameweek.gameweek_number}} (id: {{gameweek.id}})
+					-
+					{{gameweek.status}}
+					-
+					{{gameweek.deadline}}</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<h3>
+					Fixtures
+				</h3>
+				<h5>Empty = Draw</h5>
+				<table id="fixtures" class="tablesorter table table-bordered table-hover table-striped">
+					<thead>
+						<tr>
+							<th class="sorter-metatext">Fixture ID</th>
+							<th class="sorter-metatext">Home Team</th>
+							<th class="sorter-metatext">Away Team</th>
+							<th >Result</th>
+							<th>Enter Result</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for f in fixtures %}
+							<tr>
+								<td>{{f.id}}</td>
+								<td>
+									{% for t in teams %}
+										{% if f.home_team == t.id %}
+											{{ t.team_name}} ({{t.id}})
+										{% endif %}
+									{% endfor %}
+								</td>
+								<td>
+									{% for t in teams %}
+										{% if f.away_team == t.id %}
+											{{ t.team_name}} ({{t.id}})
+										{% endif %}
+									{% endfor %}
+								</td>
+								<td>
+									{% for t in teams %}
+										{% if f.result == t.id %}
+											{{ t.team_name}} ({{t.id}})
+										{% endif %}
+									{% endfor %}
+								</td>
+								<td>
+									<form method="post" action="{{site.uri.public}}/fixture/result">
+										{% include "forms/csrf.html.twig" %}
+										<input type="hidden" value="{{f.id}}" name="fixture_id"/>
+										<input type="number" name="result" required="required"/>
+										<button type="submit" class="btn btn-sm btn-primary">Go</button>
+
+									</form>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<div class="col-md-6">
+					{% if gameweek.status == 'in progress' %}
+						<a href='{{site.uri.public}}/gameweek/{{gameweek.id}}/process'><button class="btn btn-primary">
+							Process Picks
+						</button></a>
+					{% endif  %}
+						<a href='{{site.uri.public}}/emails/pick-reminder/{{gameweek.id}}'><button class="btn btn-secondary">
+							Send Reminder Email
+						</button></a>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h3>
+					Picks
+				</h3>
+				<div>
+					<table id="fixtures" class="tablesorter table table-bordered table-hover table-striped">
+						<thead>
+							<tr>
+								<th>Pick ID</th>
+								<th class="sorter-metatext">League Name</th>
+								<th class="sorter-metatext">User Name</th>
+								<th>Picked Team</th>
+								<th>Pick Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for p in picks %}
+								<tr>
+									<td>{{p.id}}</td>
+									<td>{{p.league_name}} ({{p.league_id}})</td>
+									<td>{{p.user_name}} ({{p.user_id}})</td>
+									<td>
+										{% for t in teams %}
+											{% if t.id == p.team_id %}
+												{{t.team_name}} ({{t.id}})
+											{% endif %}
+										{% endfor %}
+									</td>
+									<td>{{p.result}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	<!-- /.row -->
+{% endblock %}
+
+{% block scripts_page %}
+	<!-- Include page variables -->
+	<script>
+		{% include "pages/partials/page.js.twig" %}</script>
+
+	<!-- Include page-specific JS -->
+	{{ assets.js('js/pages/dashboard') | raw }}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "modals/modal.html.twig" %}
+
+{% block modal_title %}
+    New League
+{% endblock %}
+
+{% block modal_body %}
+    <form class="space-y-5" method="POST" action="{{site.uri.public}}/leagues/new">
+        {% include "forms/csrf.html.twig" %}
+        <div class="flex space-x-3 items-center">
+            <label>League Name</label>
+            <input type="text" name="league_name" class="border px-5 py-2 rounded" required/>
+        </div>
+        <div class="flex sce-x-3 items-center">
+            <label>Start Gameweek</label>
+            <select required name="start_gameweek"class="border px-5 py-2 rounded">
+                {% for gameweek in gameweeks %}
+                    <option value="{{gameweek.id}}">{{gameweek.gameweek_number}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="flex bg-blue-800 text-white px-8 py-4 border border-blue-900 space-x-3 rounded-lg items-center hover:bg-blue-700 active:bg-blue-900">
+            <p>Create</p>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+        </button>
+    </form>
+{% endblock %}

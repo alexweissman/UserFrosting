@@ -1,0 +1,22 @@
+{% extends "modals/modal.html.twig" %}
+
+{% block modal_title %}
+    New League
+{% endblock %}
+
+{% block modal_body %}
+    <form class="space-y-5" method="POST" action="{{site.uri.public}}/leagues/join">
+        {% include "forms/csrf.html.twig" %}
+        <div class="flex space-x-3 items-center">
+            <label>League Joining Code</label>
+            <input type="text" name="league_joining_code" class="border px-5 py-2 rounded" required/>
+        </div>
+        <button class="flex bg-blue-800 text-white px-8 py-4 border border-blue-900 space-x-3 rounded-lg items-center hover:bg-blue-700 active:bg-blue-900">
+            <p>Join</p>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+        </button>
+
+    </form>
+{% endblock %}

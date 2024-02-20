@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: Mangueira;
+        font-weight: 400;
+        src: url('/assets-raw/brand/fonts/mangueira-regular.otf') format("opentype");
+    }
+    @font-face {
+        font-family: MangueiraHeavy;
+        font-weight: 900;
+        src: url('/assets-raw/brand/fonts/mangueira-heavy.otf') format("opentype");
+    }
+    @font-face {
+        font-family: MangueiraSemiBold;
+        font-weight: 500;
+        src: url('/assets-raw/brand/fonts/mangueira-semibold.otf') format("opentype");
+    }
+    @font-face {
+        font-family: Geist;
+        src: url('/assets-raw/brand/fonts/Geist-Regular.otf') format("opentype");
+    }
+    @font-face {
+        font-family: GeistLight;
+        src: url('/assets-raw/brand/fonts/Geist-UltraLight.otf') format("opentype");
+    }
+}

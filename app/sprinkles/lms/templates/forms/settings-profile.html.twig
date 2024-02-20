@@ -1,0 +1,34 @@
+<form id="profile-settings" class="space-y-5" role="form" action="{{site.uri.public}}/account/settings/profile" method="post">
+
+        {% include "forms/csrf.html.twig" %}
+
+        {% block settings_profile %}
+            
+            <div class="flex flex-col space-y-2">
+                <label for="input-first-name" class="text-gray-700">First Name</label>
+                <input type="text" id="input-first-name" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" name="first_name" value="{{current_user.first_name}}" placeholder="{{translate("FIRST_NAME")}}" {{page.visibility}}>
+                    
+                    
+            </div>
+             <div class="flex flex-col space-y-2">
+             <label for="input-last-name" class="text-gray-700">Last Name</label>
+                        <input type="text" id="input-last-name" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" name="last_name" value="{{current_user.last_name}}" placeholder="{{translate("LAST_NAME")}}" {{page.visibility}}>
+            </div>
+            {% if 'locale' not in fields.hidden %}
+            <div class="form-group">
+                <label for="input-locale" class="text-gray-700">{{translate("LOCALE")}}</label>
+                <select id="input-locale" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" name="locale" {{page.visibility}}>
+                    {% for option, label in locales %}
+                        {% if label is not empty %}
+                            <option value="{{option}}" {% if (option == current_user.locale) %}selected{% endif %}>{{label}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+        {% endblock %}
+    <div class="">
+        <button type="submit" class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-fullpx-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full">{{translate('SAVE')}}</button>
+
+    </div>
+</form>
