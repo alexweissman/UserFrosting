@@ -1,44 +1,49 @@
 {% extends "pages/abstract/fk-base.html.twig" %}
 {% block page_title %}Home{% endblock %}
 {% block content %}
+<!-- Main Body Wrapper -->
+<section id="wrapper" class="justify-between mx-auto max-w-7xl">
+	<div id="hero" class="relative">
+		<img src="{{ assets.url('assets://brand/images/top-pitch-image.png')}}" class="absolute object-cover w-full relative">
+		<div class="absolute flex w-full h-full top-0 px-32 align-center items-center justify-between">
+			<div>
+				<h1 class="text-xl md:text-3xl text-white py-1" style="font-family: 'MangueiraHeavy';">Where strategy meets rivalry in the ultimate game of predictions</h1>
+				<h2 class="text-lg md:text-2xl text-white mt-4 py-1" style="font-family: 'Mangueira';">Outwit, outpredict, outlast. Challenge friends, triumph weekly.</h2>
+			</div>
+			<div>
+				<img src="{{ assets.url('assets://brand/images/mockup2.png')}}" class="">
+			</div>
+		</div>
+	</div>
+	<div class="my-10">
+		<h1 class="text-xl md:text-3xl w-full text-center py-1" style="font-family: 'MangueiraHeavy';">All the fun of fantasy football</h1>
+		<h2 class="text-lg md:text-2xl w-full text-center mt-4 py-1" style="font-family: 'Mangueira';">None of the headache</h2>
+	</div>
+	<div class="my-5 flex justify-between">
+		<div class="w-[260px] h-[500px] bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-end p-5">
+			<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">Join your  friend’s League</h1>
+		</div>
+		<div class="w-[260px] h-[500px] bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-end p-5">
+			<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">Choose a team to win</h1>
+		</div>
+		<div class="w-[260px] h-[500px] bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-end p-5">
+			<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">If they win, you’re in. If they don’t, you’re knocked out</h1>
+		</div>
+		<div class="w-[260px] h-[500px] bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-end p-5">	
+			<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">Play again until you’re the last one standing</h1>
+		</div>
+	</div>
+	<div class="my-10 flex justify-around items-center">
+		<div class="h-2 w-full flex-grow bg-[#9FF3A9]"></div>
+		<h1 class="text-xl md:text-3xl w-full text-center py-1" style="font-family: 'MangueiraHeavy';">How to Play</h1>
+		<div class="h-2	 w-full flex-grow bg-[#9FF3A9]"></div>
+	</div>
+	<div class="w-full h-96 bg-[#523057]">
+	
+	</div>
 
-	<section class="mx-auto w-full z-1">
-		<div class="relative flex items-center justify-center content-center items-center">
-			<img src="https://res.cloudinary.com/dvxfsaa5t/image/upload/f_auto,q_auto/v1/FootballKnockout/mlnk34v6bsjvmulzasvp" class="object-cover h-96 w-full brightness-50 relative">
-			<div class="absolute flex flex-col max-w-3xl">
-				<h1 class="text-xl md:text-4xl text-white text-center bg-[#331E36] py-1" style="font-family: 'MangueiraHeavy';">Where strategy meets rivalry in the ultimate game of predictions</h1>
-				<h2 class="text-lg md:text-2xl text-white text-center mt-4 bg-[#331E36] py-1" style="font-family: 'Mangueira';">Outwit, outpredict, outlast. Challenge friends, triumph weekly.</h2>
-				<div class="w-full flex justify-around mt-8 space-x-4">
-					<a href="{{site.uri.public}}/account/register"><button class="px-8 py-4 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider  transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">Create/Join a League</button></a>
-					<a href="{{site.uri.public}}/account/sign-in"><button class="px-8 py-4 rounded-md border bg-white text-[#331E36] text-sm font-semibold uppercase tracking-wider  transition-colors duration-400 ease-in-out hover:bg-zinc-100">Sign In</button></a>
-				</div>
-			</div>
-		</div>
-		<div class="relative flex items-center justify-center content-center items-center py-10 px-8">
-			<div class=" flex flex-col">
-				<h1 class="text-[#331E36] font-semibold text-xl sm:text-4xl tracking-tight text-center" style="font-family: 'MangueiraHeavy';">How to Play</h1>
-				<div class="flex mt-8">
-					<div class="w-1/3 text-center">Join or create a League with your friends and coworkers.</div>
-					<div class="w-1/3 text-center">Choose a team that you think is going to win their game. If your team wins, you're through! 🎉 If they don't win, you're out 😭</div>
-					<div class="w-1/3  text-center">Repeat each week against your friends until you're the last one standing!</div>
-				</div>
-				<div class="w-full flex justify-around mt-8">
-					<a href="{{site.uri.public}}/account/register"><button class="px-8 py-4 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider  transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">Create/Join a League</button></a>
-					<a href="{{site.uri.public}}/account/sign-in"><button class="px-8 py-4 rounded-md border border-[#331E36] text-[#331E36] text-sm font-semibold uppercase tracking-wider  transition-colors duration-400 ease-in-out hover:bg-zinc-100">Sign In</button></a>
-				</div>
-			</div>
-		</div>	
-		<div class="relative flex items-center justify-center content-center items-center py-5 px-8 bg-[#331E36] shadow-inner">
-			<div class=" flex flex-col ">
-				<h1 class="text-white font-semibold text-xl md:text-2xl tracking-tight text-center" style="font-family: 'MangueiraHeavy';">Always free to play</h1>
-			</div>
-		</div>
-		<div class="relative flex items-center justify-center content-center items-center py-10 px-8 ">
-			<div class=" flex">
-				<div class="w-1/2 text-center"><img src="{{ assets.url('assets://brand/images/Mockup 1.png')}}" class=""></div>
-					<div class="w-1/2 text-center"><img src="{{ assets.url('assets://brand/images/mockup2.png')}}" class=""></div>
-					
-			</div>
-		</div>	
-	</section>
-		{% endblock %}
+</div>
+<!-- End Main Body Wrapper -->
+
+</section>
+{% endblock %}

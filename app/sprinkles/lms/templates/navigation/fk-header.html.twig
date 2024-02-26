@@ -4,38 +4,55 @@
 	<!-- navbar -->
 	<nav class="flex justify-between mx-auto text-white max-w-7xl">
 		<div class="px-5 xl:px-0 py-6 flex w-full items-center">
-			<a class="text-xl md:text-3xl tracking-wide  border-b-2 border-[#9FF3A9] font-['MangueiraHeavy']" href="{{site.uri.public}}" style="font-family: 'MangueiraHeavy';">
+			<a class="text-xl md:text-3xl tracking-wide shrink-0 border-b-2 border-[#9FF3A9] font-['MangueiraHeavy']" href="{{site.uri.public}}" style="font-family: 'MangueiraHeavy';">
 				Football Knockout.
 			</a>
-			<!-- Nav Links -->
-			<ul class="hidden lg:flex px-4 mx-auto  space-x-12">
-				<li>
-					<a class="hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9] hover:underline-offset-8" href="/leagues">My Leagues</a>
-				</li>
-				<li>
-					<a class="hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="#">Rules</a>
-				</li>
-				{% if checkAccess('uri_permissions') %}
+			<div class="flex w-full justify-between items-center">
+				<!-- Nav Links -->
+				<ul class="hidden lg:flex px-4 space-x-12 pl-20">
 					<li>
-						<a class="hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="/gameweek">Gameweeks</a>	
+						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9] hover:underline-offset-8" href="/leagues">My Leagues</a>
 					</li>
-				{% endif %}
-			</ul>
-			<!-- Header Icons -->
-			<div
-				class="hidden lg:flex items-center space-x-5 items-center">
-				<!-- Sign In / Register      -->
-				{% if current_user.first_name %}
-				<a class="flex items-center hover:text-gray-200 space-x-2 hover:border-b-2 hover:border-[#9FF3A9]" href="{{site.uri.public}}/account/settings">
-					<div>{{current_user.first_name}} {{current_user.last_name}}</div>
-				</a>
-				<a class="flex items-center hover:text-gray-200 space-x-2 hover:border-b-2 hover:border-[#9FF3A9]" href="{{site.uri.public}}/account/logout">
-					Log Out
-				</a>
-				{% else %}
-				<a class="flex items-center hover:text-gray-200 space-x-2" href="{{site.uri.public}}/account/register">Register</a>
-				<a class="flex items-center hover:text-gray-200 space-x-2" href="{{site.uri.public}}/account/sign-in">Log In</a>
-				{% endif %}
+					<li>
+						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="#">How to Play</a>
+					</li>
+					<li>
+						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="#">Blog</a>
+					</li>
+					<li>
+						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="#">Rules</a>
+					</li>
+					{% if checkAccess('uri_permissions') %}
+						<li>
+							<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="/gameweek">Gameweeks</a>	
+						</li>
+					{% endif %}
+				</ul>
+				<div
+					class="hidden lg:flex items-center space-x-5 items-center">
+					<!-- Sign In / Register      -->
+					{% if current_user.first_name %}
+					<a class="flex items-center hover:text-gray-200 space-x-2 text-sm xl:text-base " href="{{site.uri.public}}/account/settings">
+						<div>{{current_user.first_name}} {{current_user.last_name}}</div>
+					</a>
+					<a class="flex items-center hover:text-gray-200 space-x-2 " href="{{site.uri.public}}/account/logout">
+						<button class="px-4 py-2 rounded-md border border-[#fff] text-[#fff] text-sm font-semibold uppercase tracking-wider">
+							Log Out
+						</button>
+					</a>
+					{% else %}
+					<a class="flex items-center hover:text-gray-200 space-x-2" href="{{site.uri.public}}/account/register">
+						<button class="px-4 py-2 rounded-md border border-[#fff] text-[#331E36] bg-white text-sm font-semibold uppercase tracking-wider">
+							Register
+						</button>
+					</a>
+					<a class="flex items-center hover:text-gray-200 space-x-2" href="{{site.uri.public}}/account/sign-in">
+						<button class="px-4 py-2 rounded-md border border-[#fff] text-[#fff] text-sm font-semibold uppercase tracking-wider">
+							Log In
+						</button>
+					</a>
+					{% endif %}
+				</div>
 			</div>
 		</div>
 		<!-- Responsive navbar -->
@@ -50,6 +67,12 @@
 		<ul class="p-4 space-between-2">
 			<a class="cursor-pointer" href="{{site.uri.public}}/leagues">
 				<li class="p-2">My Leagues</li>
+			</a>
+			<a class="cursor-pointer">
+				<li class="p-2">How to Play</li>
+			</a>
+			<a class="cursor-pointer">
+				<li class="p-2">Blog</li>
 			</a>
 			<a class="cursor-pointer">
 				<li class="p-2">Rules</li>

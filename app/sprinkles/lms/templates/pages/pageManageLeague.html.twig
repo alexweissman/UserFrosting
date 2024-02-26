@@ -1,0 +1,42 @@
+{% extends "pages/abstract/dashboard.html.twig" %}
+
+{# Overrides blocks in head of base template #}
+{% block page_title %}{{league.league_name}}{% endblock %}
+{% block page_description %}{% endblock %}
+
+{% block body_matter %}
+<a href="{{site.uri.public}}/manage/leagues"><button class="btn btn-primary">Back to Leagues</button></a>
+
+    
+    <div class="row">
+        <div class="col-md-6">
+        <table id="fixtures" class="tablesorter table table-bordered table-hover table-striped">
+					<thead>
+						<tr>
+              <th>League Name</th>
+              <th>Admin User</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% for league in leagues %}
+          <tr>
+            <td><a href="{{site.uri.public/manage/leagues/league.id}}">{{ league.league_name}}</a></td>
+            <td>{{league.user_name}} </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts_page %}
+    <!-- Include page variables -->
+    <script>
+    {% include "pages/partials/page.js.twig" %}
+    </script>
+
+    <!-- Include page-specific JS -->
+    {{ assets.js('js/pages/dashboard') | raw }}
+
+{% endblock %}

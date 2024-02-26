@@ -31,6 +31,11 @@ $app->group('/gameweek', function () {
     $this->get('/{gameweek_id}/process', 'UserFrosting\Sprinkle\Lms\Controller\GameweekController:RollOnGameweek');
 })->add('authGuard');
 
+$app->group('/manage', function () {
+    $this->get('/leagues', 'UserFrosting\Sprinkle\Lms\Controller\ManageController:PageManageLeagues');
+    $this->get('/leagues/{league_id}', 'UserFrosting\Sprinkle\Lms\Controller\ManageController:PageManageLeague');
+})->add('authGuard');
+
 $app->group('/fixture', function () {
     $this->post('/result', 'UserFrosting\Sprinkle\Lms\Controller\FixtureController:UpdateResult');
 })->add('authGuard');

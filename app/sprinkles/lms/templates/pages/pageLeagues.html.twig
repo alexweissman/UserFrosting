@@ -53,12 +53,11 @@
 												{% endfor %}
 											  Started</div>
 											<div class="bg-[#331E36] text-white text-xs rounded px-2 py-1">{% for rp in remaining_players %}
-
 													{% if rp.round_id == league.round_id %}
 														{% if rp.count is null%}
 															0
 														{% else %}
-															{{ rp.count }}
+															{{ rp.count }} 
 														{% endif %}
 													{% endif %}
 												{% endfor %} Remaining</div>
@@ -68,7 +67,7 @@
 												{% if league.user_status == 'won' %}
 													Round Complete, your league admin will restart the Round
 												{% else %}
-													{{league.deadline | date("l dS F h:i a")}} }}
+													{{league.deadline | date("l dS F h:i a") }}
 												{% endif %}
 											</div> 
 										</div>
