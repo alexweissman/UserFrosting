@@ -11,16 +11,16 @@
 				<!-- Nav Links -->
 				<ul class="hidden lg:flex px-4 space-x-12 pl-20">
 					<li>
-						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9] hover:underline-offset-8" href="/leagues">My Leagues</a>
+						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9] hover:underline-offset-8" href="{{site.uri.public}}/leagues">My Leagues</a>
 					</li>
 					<li>
-						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="#">How to Play</a>
+						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="{{site.uri.public}}#how-to-play">How to Play</a>
 					</li>
 					<li>
-						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="#">Blog</a>
+						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="{{site.uri.public}}/blog">Blog</a>
 					</li>
 					<li>
-						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="#">Rules</a>
+						<a class="text-sm xl:text-base hover:text-gray-200 hover:border-b-2 hover:border-[#9FF3A9]" href="{{site.uri.public}}/rules">Rules</a>
 					</li>
 					{% if checkAccess('uri_permissions') %}
 						<li>
@@ -68,17 +68,14 @@
 			<a class="cursor-pointer" href="{{site.uri.public}}/leagues">
 				<li class="p-2">My Leagues</li>
 			</a>
-			<a class="cursor-pointer">
+			<a class="cursor-pointer" href="{{site.uri.public}}#how-to-play">
 				<li class="p-2">How to Play</li>
 			</a>
-			<a class="cursor-pointer">
+			<a class="cursor-pointer" href="{{site.uri.public}}/blog">
 				<li class="p-2">Blog</li>
 			</a>
-			<a class="cursor-pointer">
+			<a class="cursor-pointer" href="{{site.uri.public}}/rules">
 				<li class="p-2">Rules</li>
-			</a>
-			<a class="cursor-pointer" href="{{site.uri.public}}/account/settings">
-				<li class="p-2">My Account</li>
 			</a>
 			{% if current_user.first_name %}
 				<a class="flex items-center hover:text-gray-200 space-x-2 p-2" href="{{site.uri.public}}/account/settings">
@@ -88,9 +85,15 @@
 					Log Out
 				</a>
 				{% else %}
-				<a class="flex items-center hover:text-gray-200 space-x-2" href="{{site.uri.public}}/account/register">Register</a>
+				<a class="flex items-center hover:text-gray-200 space-x-2 p-2" href="{{site.uri.public}}/account/register">Register</a>
 				<a class="flex items-center hover:text-gray-200 space-x-2 p-2" href="{{site.uri.public}}/account/sign-in">Log In</a>
 				{% endif %}
+			{% if checkAccess('uri_permissions') %}
+			<a class="cursor-pointer" href="{{site.uri.public}}/gameweek">
+				<li class="p-2">Gameweek</li>
+			</a>
+						
+					{% endif %}
 		</ul>
 	</div>
 </section>

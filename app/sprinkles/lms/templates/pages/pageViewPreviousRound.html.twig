@@ -1,0 +1,114 @@
+{% extends "pages/abstract/fk-base.html.twig" %}
+{% block page_title %}League
+	{{league.league_name}}
+{% endblock %}
+{% block content %}
+	<section class="mx-auto w-full">
+		<div class="justify-between mx-auto max-w-7xl mt-12 space-y-6 ">
+			<div class="flex w-full justify-between items-center align-center px-5">
+				<h1 class="text-[#331E36] font-semibold text-2xl tracking-tight" style="font-family: 'MangueiraSemiBold';">League:
+					{{league.league_name}}</h1>
+				<h2>Gameweek Started: {{round.start_gameweek}}, Ended: {{round.current_gameweek}}</h2>
+				<div class="space-x-2">
+					<a href="{{site.uri.public}}/leagues/view-league/{{league.id}}">
+						<button class="px-2 py-2 rounded-md border border-[#331E36] text-[#331E36] text-sm font-semibold uppercase tracking-wider">Back</button>
+					</a>
+				</div>
+			</div>
+			<div id="alerts"></div>
+			<div class="hidden" id="invite-div">
+					<div class="justify-between mx-auto max-w-7xl mt-12 space-y-6 ">
+						<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
+							<div class="bg-gray-50 rounded-lg p-10 space-y-3">
+								<h2 class="text-center text-lg ">Invite people to join the league</h2>
+								<p class="text-center text-sm">New players can only join at the start of a round.</p>
+								<p class="w-full text-center bg-[#331E36] py-2 text-gray-300">Code to join this league: <span class="text-lg text-white">{{league.join_code}}</span>
+
+								<p class="text-center">If you want to share via Messages, WhatsApp, Email or other application, you can copy and paste the text below:</p>
+								<div class="w-full space-y-2 p-2 bg-gray-200 rounded text-xs">
+									<p>Hi,<p>
+									<p>For the 2024/25 Premier League, I'd like to invite you to play Football Knockout in our league: {{league.league_name}}.</p>
+									<p>Joining the league couldn't be easier. Simply use the link below and you'll automatically be added to the League.</p>
+									<p>{{site.uri.public}}/auto-join/{{league.join_code}}</p>
+									<p>League Code: {{league.join_code}}</p>
+									<p>Looking forward to playing against you!</p>
+								</div>
+								<button onclick="copyInviteText()" class="px-4 py-3 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-xs uppercase tracking-wider transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">Copy the text above</button>
+								<p class="hidden text-xs text-gray-800" id="copySuccess">Text copied to clipboard.</p>
+							</div>
+						</div>
+				</div>
+			</div>
+			<div class="relative overflow-x-auto px-5">
+				<table class="w-full text-sm text-left text-gray-500 border-separate">
+					<tbody>
+						{% for ru in round_users %}
+							<tr class="bg-white  my-3">
+								<td class="px-6 py-2 rounded-tl-xl rounded-bl-xl border-t-2 border-l-2 border-b-2 border-[#9CECD5] flex h-full space-x-3 items-center">
+									<p class="my-3">{{ru.user_name}}</p>
+									{% if ru.user_status == 'won' %}
+										<p class="px-2 py-1 mx-auto text-xs md:text-sm border rounded border-green-200 text-center bg-green-100">Winner!</p>
+									{% else %}
+										<p class="px-2 py-1 mx-auto text-xs md:text-sm border rounded border-red-200 text-center bg-red-100">Knocked Out</p>
+									{% endif %}
+								</td>
+								{% for p in picks %}
+									{% if p.user_id == ru.user_id %}
+										<td class="px-6 py-2 border-t-2 border-b-2 border-[#9CECD5] last:border-t-2 last:border-b-2 last:border-r-2 last:rounded-tr-xl last:rounded-br-xl last:border-[#9CECD5]">
+											<div class="flex  items-center justify-around">
+												<div class="flex items-center">
+													<span class="flex-shrink-0 ">
+														{% for t in teams %}
+															{% if t.id == p.team_id %}
+																<img src="https://res.cloudinary.com/dvxfsaa5t/image/upload/f_auto,q_auto/v1/FootballKnockout/{{t.image_name}}" class="h-10 w-10">
+															{% endif %}
+														{% endfor %}
+													</span>
+													<span class="flex-shrink-0 ">
+														{% if p.result == 'pending' %}
+															<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+																<path stroke-linecap="round" stroke="#331E36" stroke-width="2" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+															</svg>
+														{% elseif p.result== 'won' %}
+															<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+																<path stroke-linecap="round" stroke="green" stroke-width="2" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+															</svg>
+														{% else %}
+															<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+																<path stroke-linecap="round" stroke="red" stroke-width="2" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+															</svg>
+														{% endif %}
+													</span>
+												</div>
+											</div>
+										</td>
+									{% endif %}
+								{% endfor %}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		function toggleInviteDiv(){
+			document.getElementById('invite-div').classList.toggle("hidden");
+		}
+
+		function copyInviteText(){
+			var copyText = 
+			`Hi,
+For the 2024/25 Premier League, I'd like to invite you to play Football Knockout in our league: {{league.league_name}}.
+Joining the league couldn't be easier. Simply use the link below and you'll automatically be added to the League.
+{{site.uri.public}}/auto-join/{{league.join_code}}
+League Code: {{league.join_code}}
+Looking forward to playing against you!`;
+
+			navigator.clipboard.writeText(copyText);
+			document.getElementById('copySuccess').classList.remove("hidden");
+
+		}
+	</script>
+{% endblock %}

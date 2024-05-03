@@ -34,6 +34,12 @@ class Round extends Model
         'league_id',
         'status',
         'start_gameweek',
-        'current_gameweek'
+        'current_gameweek',
+        'entry_fee'
     ];
+
+    public function roundUsers(){
+        $roundUsers = RoundUser::where('round_id', $this->id)->get();
+        return $roundUsers;
+    }
 }

@@ -4,7 +4,47 @@
 
 	<section class="mx-auto w-full ">
 		<div class="justify-between mx-auto max-w-7xl mt-12 space-y-6 ">
-			<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
+		<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-2/3 mx-auto shadow-lg">
+				<div class="bg-gray-50 rounded-lg p-10">
+					<div class="w-full flex justify-between mb-10">
+						<h1 class="text-[#331E36] font-semibold text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">FK Pro</h1>
+					</div>
+					{% if subscription.status == 'active' %}
+						You are subscribed to FK Pro for the 2023-2024 Premier League Season, receiving the benefits:
+						<ul class="list-disc list-inside">
+							<li>View Live Tables</li>
+							<li>View Form Tables</li>
+							<li>View Live Odds</li>
+						</ul>
+						Thank you!
+
+					{% else %}
+						{% if environment == 'development' %}
+						
+						<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+						<stripe-pricing-table 
+							pricing-table-id="prctbl_1P1YobHwZDYDzwAbTXS9pZkV"
+							publishable-key="pk_test_51P121vHwZDYDzwAb7tXVlGJfX6SBEtBmVRc7bee8dn8VaREv7Tx3T2AqL6MZTAclGCj8IlDICM9pqOq4jLSPe2q800LxUbiuR3"
+							customer-email="{{current_user.email}}"
+							return-url="https://footballknockout.test/account/settings"
+						>
+						</stripe-pricing-table>
+						{% endif %}
+						{% if environment == 'production' %}
+						
+						<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+						<stripe-pricing-table 
+							pricing-table-id="prctbl_1P1ZGlHwZDYDzwAbZcfdkAJG"
+							publishable-key="pk_live_51P121vHwZDYDzwAbp0Y2mLIbtvRxhHYpIJhmW17FY7TaPYfzJXUMOzU93U7WdpR4LlE4ynBoIYa6PwEDJWraKxjT005sixiNEF"
+							customer-email="{{current_user.email}}"
+							return-url="https://football-knockout.co.uk/account/settings"
+						>
+						</stripe-pricing-table>
+						{% endif %}
+					{% endif %}
+				</div>
+            </div>
+			<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-2/3 mx-auto shadow-lg">
 				<div class="bg-gray-50 rounded-lg p-10">
 					<div class="w-full flex justify-between">
 						<h1 class="text-[#331E36] font-semibold text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">Profile Settings</h1>
@@ -15,7 +55,18 @@
                     {% include "forms/settings-profile.html.twig" %}
 				</div>
             </div>
-            <div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
+			<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-2/3 mx-auto shadow-lg">
+				<div class="bg-gray-50 rounded-lg p-10">
+					<div class="w-full flex justify-between">
+						<h1 class="text-[#331E36] font-semibold text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">Marketing and Reminder Settings</h1>
+						
+                        
+					</div>
+					<div id="alerts"></div>
+                    {% include "forms/settings-marketing.html.twig" %}
+				</div>
+            </div>
+            <div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-2/3 mx-auto shadow-lg">
 				<div class="bg-gray-50 rounded-lg p-10">
 					<div class="w-full flex justify-between">
 						<h1 class="text-[#331E36] font-semibold text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">Account Settings</h1>

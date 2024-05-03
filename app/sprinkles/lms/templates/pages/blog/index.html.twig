@@ -1,0 +1,47 @@
+{% extends "pages/abstract/fk-base.html.twig" %}
+{% block page_title %}Blog{% endblock %}
+{% block meta_seo %}
+<meta name="description" content="Keep up on the latest football news to keep ahead in your Last Man Standing, Survivor and Knockout games.">
+<meta name="keywords" content="last man standing, last one standing, survivor, knockout">
+<meta name="robots" content="follow, index">
+<link rel="canonical" href="https://football-knockout.co.uk/blog">
+{% endblock %}
+{% block content %}
+<!-- Main Body Wrapper -->
+<section id="wrapper" class="justify-between mx-auto max-w-7xl">
+	<div id="hero" class="relative">
+		<img src="{{ assets.url('assets://brand/images/top-pitch-image.png')}}" class="absolute object-cover w-full relative">
+		<div class="absolute flex w-full h-full top-0 px-32 align-center items-center justify-between">
+			<div>
+				<h1 class="text-xl md:text-3xl text-white py-1" style="font-family: 'MangueiraHeavy';">Football Knockout Blog</h1>
+				<h2 class="text-lg md:text-2xl text-white mt-4 py-1" style="font-family: 'Mangueira';">Keep up on the latest football news to keep ahead in your Last Man Standing games</h2>
+			</div>
+		</div>
+	</div>
+
+	<div class="my-10 flex flex-wrap">
+		{% for article in articles|sort((a, b) => a.created_at) %}
+			<div class="px-2 w-full sm:w-full lg:w-1/2">
+				<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1  shadow-lg ">
+					<div class="bg-gray-50 rounded-lg p-5">
+						<p class="text-lg">{{article.title}}</p>
+						<p class="py-3">{{ article.subtitle|length > 50 ? article.subtitle|slice(0, 50) ~ '...' : article.subtitle  }}</p>
+						<p class="py-3">{{ article.article|length > 70 ? article.article|striptags|slice(0, 70) ~ '...' : article.article|raw  }}</p>
+						<a href="{{site.uri.public}}/blog/{{article.slug}}">
+							<button  class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">
+								<p>Read More</p>
+							</button>
+						</a>
+					</div>
+				</div>
+			</div>
+			
+		{% endfor %}
+	</div>
+	
+
+</div>
+<!-- End Main Body Wrapper -->
+
+</section>
+{% endblock %}

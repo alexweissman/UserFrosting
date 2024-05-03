@@ -8,8 +8,8 @@
     <div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
         <div class="bg-gray-50 rounded-lg p-10">
         <h1 class="text-[#331E36] font-semibold text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">{{translate('SIGNIN')}}</h1>
-        <div id="alerts"></div>
-        <div class="form-alerts" id="alerts-page"></div>
+        <div id="alerts" class="mt-3"></div>
+        <div class="form-alerts" id="alerts-page" ></div>
         <form action="{{site.uri.public}}/account/login" id="sign-in" method="post" class="flex flex-col space-y-5">
           {% include "forms/csrf.html.twig" %}
 
@@ -28,6 +28,7 @@
             <label for="rememberme" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{translate('REMEMBER_ME')}}</label>
           </div>
             <!-- /.col -->
+          <input type="hidden" name="league_join_code" id="league_join_code" value="" />
           <button type="submit" id="submitForm" class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">
               <p>Sign In</p>
           </button>
@@ -59,6 +60,17 @@
     </script>
 
     <script>
+    function getJoinCode(){
+      console.log(decodeURI(window.location.href));
+      console.log(decodeURIComponent(window.location.href))
+
+      const searchParams = new URLSearchParams(window.location.search);
+      if(searchParams.has('join_code')){
+          console.log(searchParams.get('join_code'));
+          document.getElementById('league_join_code').value=searchParams.get('redirect');
+      }
+    }
+    window.onload = getJoinCode();
     site = $.extend(
         true,               // deep extend
         {

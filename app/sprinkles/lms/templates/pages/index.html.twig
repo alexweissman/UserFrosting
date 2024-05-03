@@ -1,49 +1,140 @@
 {% extends "pages/abstract/fk-base.html.twig" %}
-{% block page_title %}Home{% endblock %}
-{% block content %}
-<!-- Main Body Wrapper -->
-<section id="wrapper" class="justify-between mx-auto max-w-7xl">
-	<div id="hero" class="relative">
-		<img src="{{ assets.url('assets://brand/images/top-pitch-image.png')}}" class="absolute object-cover w-full relative">
-		<div class="absolute flex w-full h-full top-0 px-32 align-center items-center justify-between">
-			<div>
-				<h1 class="text-xl md:text-3xl text-white py-1" style="font-family: 'MangueiraHeavy';">Where strategy meets rivalry in the ultimate game of predictions</h1>
-				<h2 class="text-lg md:text-2xl text-white mt-4 py-1" style="font-family: 'Mangueira';">Outwit, outpredict, outlast. Challenge friends, triumph weekly.</h2>
-			</div>
-			<div>
-				<img src="{{ assets.url('assets://brand/images/mockup2.png')}}" class="">
-			</div>
-		</div>
-	</div>
-	<div class="my-10">
-		<h1 class="text-xl md:text-3xl w-full text-center py-1" style="font-family: 'MangueiraHeavy';">All the fun of fantasy football</h1>
-		<h2 class="text-lg md:text-2xl w-full text-center mt-4 py-1" style="font-family: 'Mangueira';">None of the headache</h2>
-	</div>
-	<div class="my-5 flex justify-between">
-		<div class="w-[260px] h-[500px] bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-end p-5">
-			<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">Join your  friend’s League</h1>
-		</div>
-		<div class="w-[260px] h-[500px] bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-end p-5">
-			<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">Choose a team to win</h1>
-		</div>
-		<div class="w-[260px] h-[500px] bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-end p-5">
-			<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">If they win, you’re in. If they don’t, you’re knocked out</h1>
-		</div>
-		<div class="w-[260px] h-[500px] bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-end p-5">	
-			<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">Play again until you’re the last one standing</h1>
-		</div>
-	</div>
-	<div class="my-10 flex justify-around items-center">
-		<div class="h-2 w-full flex-grow bg-[#9FF3A9]"></div>
-		<h1 class="text-xl md:text-3xl w-full text-center py-1" style="font-family: 'MangueiraHeavy';">How to Play</h1>
-		<div class="h-2	 w-full flex-grow bg-[#9FF3A9]"></div>
-	</div>
-	<div class="w-full h-96 bg-[#523057]">
-	
-	</div>
-
-</div>
-<!-- End Main Body Wrapper -->
-
-</section>
+{% block meta_seo %}
+	<meta name="description" content="The premier place to host your Last One Standing, Last Man Standing, Survivor or Knockout competition. Outwit, outpredict, outlast. Challenge friends, triumph weekly.">
+	<meta name="keywords" content="football knockout, last man standing, last one standing, survivor, premier league">
+	<meta name="robots" content="follow, index">
+	<link rel="canonical" href="https://football-knockout.co.uk">
 {% endblock %}
+{% block page_title %}The premier place to host your Last One Standing, Last Man Standing, Survivor or Knockout competition
+{% endblock %}
+{% block content %}
+	<!-- Main Body Wrapper -->
+	<section id="wrapper" class="justify-between mx-auto max-w-7xl">
+		<div id="hero" class="relative">
+			<img src="{{ assets.url('assets://brand/images/top-pitch-image.png')}}" class="absolute object-cover w-full h-full">
+			<div class="relative flex flex-col lg:flex-row w-full h-full top-0 px-5 py-10 lg:px-32 align-center items-center justify-between">
+				<div class="">
+					<h1 class="text-xl md:text-3xl text-white py-1 text-center lg:text-left" style="font-family: 'MangueiraHeavy';">The best place to host your Last Man Standing football competition</h1>
+					<h2 class="text-lg md:text-2xl text-white mt-4 py-1 text-center lg:text-left" style="font-family: 'Mangueira';">Be the Last Man Standing. Always free to play.</h2>
+					<a class="flex items-center hover:text-gray-200 space-x-2 mt-4 w-full lg:w-auto" href="{{site.uri.public}}/account/register">
+						<button class="px-10 py-2 mx-20 lg:mx-0 rounded-md border border-[#fff] w-full lg:w-auto text-[#331E36] bg-white text-sm font-semibold uppercase tracking-wider">
+							Register Now
+						</button>
+					</a>
+				</div>
+				<div class="w-full mt-10 lg:mt-0">
+					<img src="{{ assets.url('assets://brand/images/Group 4 1.png')}}" class="w-1/2 lg:w-full mx-auto">
+				</div>
+			</div>
+		</div>
+		<div class="my-10 px-5">
+			<h1 class="text-xl md:text-3xl w-full text-center py-1" style="font-family: 'MangueiraHeavy';">The no hassle alternative to Fantasy Football.</h1>
+			<h2 class="text-lg md:text-2xl w-full text-center mt-4 py-1" style="font-family: 'Mangueira';">All the enjoyment without the season long commitment and tinkering with teams for hours on end.</h2>
+
+		</div>
+		<div class="my-5 flex justify-between px-0 sm:px-10 md:px-0 flex-wrap space-x-0 md:space-x-5">
+			<div class=" md:mx-0 w-1/2 sm:w-2/5 md:w-1/5 bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-between p-5">
+				<img src="{{ assets.url('assets://brand/images/step-1.png')}}" class="shadow-xl">
+				<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">Join your  friend&#39;s League</h1>
+			</div>
+			<div class=" md:mx-0  w-1/2 sm:w-2/5 md:w-1/5 bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-between p-5">
+				<img src="{{ assets.url('assets://brand/images/step-2.png')}}" class="shadow-xl">
+				<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">Choose a team to win</h1>
+			</div>
+			<div class=" md:mx-0  w-1/2 sm:w-2/5 md:w-1/5  bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-between p-5">
+				<img src="{{ assets.url('assets://brand/images/step-2.png')}}" class="shadow-xl">
+				<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">If they win, you&#39;re in. If they don&#39;t, you&#39;re knocked out</h1>
+			</div>
+			<div class=" md:mx-0  w-1/2 sm:w-2/5 md:w-1/5  bg-gradient-to-b from-[#523057] to-[#331E36] to- flex flex-col justify-between p-5">
+				<img src="{{ assets.url('assets://brand/images/step-2.png')}}" class="shadow-xl">
+				<h1 class="text-xl text-white py-1 text-center" style="font-family: 'Mangueira';">Play again until you&#39;re the last one standing</h1>
+			</div>
+		</div>
+		<div class="my-10 relative">
+			<h1 class="text-xl md:text-3xl w-full text-center py-1" style="font-family: 'MangueiraHeavy';">All the fun of fantasy football</h1>
+			<h2 class="text-lg md:text-2xl w-full text-center mt-4 py-1" style="font-family: 'Mangueira';">None of the headache.</h2>
+			<h2 class="text-lg md:text-2xl w-full text-center mt-4 py-1" style="font-family: 'Mangueira';">Get rid of the spreadsheets and managing a huge WhatsApp group, it&#39;s all done for you.</h2>
+		</div>
+		<div class="my-10 flex justify-around items-center scroll-m-24" id="how-to-play">
+			<div class="h-2 w-full flex-grow bg-[#9FF3A9]"></div>
+			<h1 class="text-xl md:text-3xl w-full text-center py-1" style="font-family: 'MangueiraHeavy';">How to Play Last Man Standing</h1>
+			<div class="h-2	 w-full flex-grow bg-[#9FF3A9]"></div>
+		</div>
+		<div class="w-full bg-[#523057] text-lg md:text-xl text-gray-200 text-center space-y-4 items-center justify-center flex flex-col py-20 px-10 md:px-40">
+			<div>Choose a team to win each game week, if they win then you're through to the next gameweek! If they draw or lose then you're out.</div>
+			<div>Repeat each game week against everyone in your League.</div>
+			<div>The Round ends when there's one person left - the Last Man Standing!</div>
+			<div>The fun doesn't stop there! When the Round is complete, we go again from the next set of fixtures.</div>
+			<a class="flex items-center hover:text-gray-200 space-x-2 mt-4 w-full lg:w-auto" href="{{site.uri.public}}/account/register">
+				<button class="px-10 py-2 mx-20 lg:mx-0 rounded-md border border-[#fff] w-full lg:w-auto text-[#331E36] bg-white text-sm font-semibold uppercase tracking-wider">
+					Register Now
+				</button>
+			</a>
+		</div>
+		<div class="my-10 flex justify-around items-center">
+			<div class="h-2 w-full flex-grow bg-[#9FF3A9]"></div>
+			<h1 class="text-xl md:text-3xl w-full text-center py-1" style="font-family: 'MangueiraHeavy';">Easily keep track of who's paid the entry fee</h1>
+			<div class="h-2	 w-full flex-grow bg-[#9FF3A9]"></div>
+		</div>
+		<div class="flex flex-col md:flex-row px-4">
+			<div class="w-full md:w-1/2 space-y-3">
+				<p>Set the entry fee for your last man standing competition when creating the league and restarting a round. For example, everybody entering the competition would add £10 to the prize pool.</p>
+				<p>Everyone can see the total prize pool for the current round, show your players what they can win</p>
+				<p>Easily see who's paid and who hasn't. It's one click to record who's paid their entry fee.</p>
+				<br/>
+				<p class="font-bold">Can you process our entry fees for us?</p>
+				<p>Unfortunately not just yet, the Gambling Commission would need to issue us a license to operate. For now, collect the money yourselves and keep track of who's paid using our system.</p>
+			</div>
+			<div class="md:w-1/2 w-full bg-[#523057] p-4 flex items-center justify-around">
+				<img src="{{ assets.url('assets://brand/images/league-fee.png')}}" class="h-full">
+			</div>
+		</div>
+		<div class="my-10 flex justify-around items-center">
+			<div class="h-2 w-full flex-grow bg-[#9FF3A9]"></div>
+			<h1 class="text-xl md:text-3xl w-full text-center py-1" style="font-family: 'MangueiraHeavy';">Get ahead of the pack with FK Pro.</h1>
+			<div class="h-2	 w-full flex-grow bg-[#9FF3A9]"></div>
+		</div>
+		<div class="flex flex-col md:flex-row px-4">
+			<div class="w-full space-y-5 text-center flex flex-col items-center">
+				<div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-2 md:gap-12 md:space-y-0">
+					<div class="flex flex-col items-center space-y-2">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/>
+						</svg>
+						<h3 class="mb-2 text-xl font-bold ">Never Miss a Pick</h3>
+						<p class="text-gray-500 ">If you forget to choose a team, FK Pro will automatically choose the highest ranking team you've not picked yet.</p>
+						<p class="text-gray-500 ">A missed pick means you're knocked out without FK Pro.</p>
+					</div>
+					<div class="flex flex-col items-center space-y-2">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"/>
+						</svg>
+						<h3 class="mb-2 text-xl font-bold ">Live League Table</h3>
+						<p class="text-gray-500 ">See who's on top to make the best pick, all in one place.</p>
+					</div>
+					<div class="flex flex-col items-center space-y-2">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"/>
+						</svg>
+						<h3 class="mb-2 text-xl font-bold ">Live Form Table</h3>
+						<p class="text-gray-500 ">Make informed decisions and choose the in-form team. Find the team to win that others might not see.</p>
+					</div>
+					<div class="flex flex-col items-center space-y-2">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"/>
+						</svg>
+						<h3 class="mb-2 text-xl font-bold ">Winning Betting Odds</h3>
+						<p class="text-gray-500 ">Use the bookies to your advantage! See each team's odds of winning when making your pick.</p>
+					</div>
+				</div>
+				<a href="{{site.uri.public}}/account/settings" class="space-y-3">
+					<img src="https://res.cloudinary.com/dxovok2e7/image/upload/f_auto,q_auto/vbd1hqhbdnsaw6iwvnf9" class="h-20 w-40">
+					<h3 class="text-[#331E36] font-semibold text-2xl tracking-tight" style="font-family: 'MangueiraSemiBold';">&#163;9.99</h3>
+					<button class="px-8 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white uppercase tracking-wider transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">Buy Now</button>
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- End Main Body Wrapper -->
+
+</section>{% endblock %}

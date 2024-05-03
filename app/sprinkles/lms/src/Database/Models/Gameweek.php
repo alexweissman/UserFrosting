@@ -34,4 +34,15 @@ class Gameweek extends Model
         'status',
         'deadline'
     ];
+
+    public function rounds(){
+        $rounds = Round::where('curre_gameweek', $this->id)->get();
+        return $rounds;
+    }
+    public function roundUsers(){
+        $roundUsers = Round::where('current_gameweek', $this->id)
+            ->leftJoin('round_user', 'round.id', 'round_user.round_id')
+            ->get();
+        return $roundUsers;
+    }
 }

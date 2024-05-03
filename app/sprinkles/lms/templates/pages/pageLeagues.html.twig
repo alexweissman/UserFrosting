@@ -11,13 +11,35 @@
 						<button class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider  transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">Create League</button>
 					</a>
 					<a href="{{site.uri.public}}/leagues/join-league">
+					
 						<button class="px-4 py-2 rounded-md border border-[#331E36] text-[#331E36] text-sm font-semibold uppercase tracking-wider  transition-colors duration-400 ease-in-out hover:bg-zinc-100">Join League</button>
 					</a>
 				</div>
 			</div>
 			<div id="alerts"></div>
+
 			<div class="flex flex-col md:flex-row flex-wrap">
+			{% set league_count = 1 %}
 				{% for league in leagues %}
+					{% if league_count == 2 %}
+						<div class=" {% if leagues|length > 2 %}w-full md:basis-1/2 lg:basis-1/3{% else %} w-full md:w-1/2 lg:w-1/3  {% endif %}   p-3">
+							<!-- START ADVERTISER: Preworn from awin.com -->
+							<a rel="sponsored" href="https://www.awin1.com/cread.php?s=3178342&v=29773&q=440906&r=1591112">
+								<img src="https://www.awin1.com/cshow.php?s=3178342&v=29773&q=440906&r=1591112" border="0">
+							</a>
+							<!-- END ADVERTISER: Preworn from awin.com -->
+						</div>
+					{% endif %}
+					{% if  league_count == 7 %}
+						<div class=" {% if leagues|length > 2 %}w-full md:basis-1/2 lg:basis-1/3{% else %} w-full md:w-1/2 lg:w-1/3  {% endif %}   p-3">
+							<!-- START ADVERTISER: Preworn from awin.com -->
+							<a rel="sponsored" href="https://www.awin1.com/cread.php?s=3178341&v=29773&q=440906&r=1591112">
+								<img src="https://www.awin1.com/cshow.php?s=3178341&v=29773&q=440906&r=1591112" border="0">
+							</a>
+							<!-- END ADVERTISER: Preworn from awin.com -->
+						</div>
+					{% endif %}
+					{% set league_count = league_count + 1 %}
 					<div class=" {% if leagues|length > 2 %}w-full md:basis-1/2 lg:basis-1/3{% else %} w-full md:w-1/2 lg:w-1/3  {% endif %}   p-3">
 						{% if league.user_status == 'out'  %}
 							<div class="rounded-xl bg-[#D2E0E0] p-1 shadow">
@@ -96,7 +118,63 @@
 							</div>
 						{% endfor %}
 						{% if leagues|length == 0 %}
-							You're not in any leagues at the moment, join a league or start your own above!
+						<div class="flex flex-col md:flex-row items-center space-x-0 space-y-5 md:space-y-0 md:space-x-5 mx-auto px-5">
+							<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
+								<div class="bg-gray-50 rounded-lg p-10">
+									<div class="w-full flex justify-between">
+										<h1 class="text-[#331E36] font-semibold text-2xl lg:text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">Create League</h1>
+									</div>
+									<form class="space-y-5" method="POST" action="{{site.uri.public}}/leagues/create-league">
+										{% include "forms/csrf.html.twig" %}
+										<div class="flex flex-col space-y-2">
+											<label class="text-gray-700">League Name*</label>
+											<input type="text" name="league_name" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" required/>
+										</div>
+										<div class="flex flex-col space-y-2">
+											<label class="text-gray-700">Start Gameweek*</label>
+											<select required name="start_gameweek" class="border border-gray-300 px-5 py-2 rounded border-[#331E36]">
+												{% for gameweek in gameweeks %}
+													<option value="{{gameweek.id}}">{{gameweek.gameweek_number}}
+														- Starts
+														{{gameweek.deadline | date("dS F Y")}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="flex flex-col space-y-2">
+											<label class="text-gray-700">Entry Fee</label>
+											<div class="relative mt-2 rounded-md shadow-sm">
+												<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+													<span class="text-gray-500 sm:text-sm">£</span>
+												</div>
+												<input type="text" name="entry_fee" id="entry_fee" class="block w-full rounded-md pl-7 placeholder:text-gray-400 border border-gray-300 py-2 rounded-md border-[#331E36]" placeholder="10" aria-describedby="price-currency">
+											</div>
+											<p class="text-xs text-gray-700">Optional. Keep track of who's paid for each Round.</p>
+										</div>
+										<button class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full">
+											<p>Create</p>
+										</button>
+									</form>
+								</div>
+							</div>
+							<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
+								<div class="bg-gray-50 rounded-lg p-10 h-full">
+									<div class="w-full flex justify-between">
+										<h1 class="text-[#331E36] font-semibold text-2xl lg:text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">Join League</h1>
+									</div>
+									<form class="space-y-5" method="POST" action="{{site.uri.public}}/leagues/join-league">
+										{% include "forms/csrf.html.twig" %}
+										<div class="flex flex-col space-y-2">
+											<label class="text-gray-700">League Joining Code</label>
+											<input type="text" name="league_joining_code" class="border  border-gray-300 px-2 py-2 rounded-md" placeholder="S9mrWyhD" required/>
+											<p class="text-xs">Enter the code given to you from the league administrator e.g. "S9mrWyhD".</p>
+										</div>
+										<button class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full">
+											<p>Join</p>
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
 						{% endif %}
 					</div>
 				</div>

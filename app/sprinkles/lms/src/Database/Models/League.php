@@ -10,15 +10,7 @@
 
 namespace UserFrosting\Sprinkle\Lms\Database\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface;
-use UserFrosting\Sprinkle\Account\Facades\Password;
 use UserFrosting\Sprinkle\Core\Database\Models\Model;
-use UserFrosting\Sprinkle\Core\Facades\Debug;
-
-use UserFrosting\Sprinkle\Lms\Database\Models\Gameweek;
 
 class League extends Model
 {
@@ -37,4 +29,9 @@ class League extends Model
         'original_league_id',
         'join_code'
     ];
+
+    public function rounds(){
+        $rounds = Round::where('league_id', $this->id)->get();
+        return $rounds;
+    }
 }

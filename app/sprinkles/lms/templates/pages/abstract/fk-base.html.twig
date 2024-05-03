@@ -10,18 +10,22 @@
 			<meta name="generator" content="UserFrosting"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+			<!-- Google tag (gtag.js) -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=G-8LPLW2PXBK"></script>
 			<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
 
-			gtag('config', 'G-8LPLW2PXBK');
+				gtag('config', 'G-8LPLW2PXBK');
 			</script>
 			<title>{{ site.title }}
 				|
 				{% block page_title %}New Page
 				{% endblock %}
 			</title>
+			{% block meta_seo %}
+			{% endblock %}
 
 			{% include "pages/partials/favicons.html.twig" %}
 
@@ -53,6 +57,9 @@ const alerts = await response.json();
 if (alerts.length > 0) {
 var alertsContainer = document.getElementById('alerts');
 alerts.forEach((al) => {
+	if(al.message.includes("session") ){
+		return;
+	}
 var newAlert = document.createElement('div');
 switch (al.type) {
 case 'success': newAlert.setAttribute('class', 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative flex justify-between');
@@ -81,4 +88,15 @@ alertsContainer.appendChild(newAlert);
 	{% endblock %}
 
 	{% block body %}
-		<body {% block body_attributes %} {% endblock %} class="bg-gray-50" onload="fetchAlerts()" {% include "navigation/fk-header.html.twig" %} {% block content %} {% endblock %} {# Handlebars template for uf-alerts. #} {% block uf_alerts_template %} {% include "pages/partials/alerts.html.twig" %} {% endblock %} <!-- Javascript configuration --> <script> {% include "pages/partials/config.js.twig" %} </script> {% block scripts %} {# Override this block in a child layout template or page template to override site-level scripts. #} {% block scripts_site %} {% endblock %} {# Override this block in a child layout template or page template to specify or override scripts for groups of similar pages. #} {% block scripts_page_group %} {% endblock %} {# Override this block in a child layout template or page template to specify or override page-level scripts. #} {% block scripts_page %} {% endblock %} {% endblock %} {% include "pages/partials/fk-footer.html.twig" %} </body> {% endblock %} </html> {% endblock %}
+		<body {% block body_attributes %} {% endblock %} class="bg-gray-50" onload="fetchAlerts()" {% include "navigation/fk-header.html.twig" %} {% block content %} {% endblock %} {# Handlebars template for uf-alerts. #} {% block uf_alerts_template %} {% include "pages/partials/alerts.html.twig" %} {% endblock %} <!-- Javascript configuration --> <script> {% include "pages/partials/config.js.twig" %} </script> {% block scripts %} {# Override this block in a child layout template or page template to override site-level scripts. #} {% block scripts_site %} {% endblock %} {# Override this block in a child layout template or page template to specify or override scripts for groups of similar pages. #} {% block scripts_page_group %} {% endblock %} {# Override this block in a child layout template or page template to specify or override page-level scripts. #} {% block scripts_page %} {% endblock %} {% endblock %} {% include "pages/partials/fk-footer.html.twig" %}
+
+		<script type="text/javascript" src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js" charset="UTF-8"></script>
+		<script type="text/javascript" charset="UTF-8">
+			document.addEventListener('DOMContentLoaded', function () {
+			cookieconsent.run({"notice_banner_type":"simple","consent_type":"implied","palette":"light","language":"en","page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"website_name":"Football Knockout","website_privacy_policy_url":"https://www.football-knockout.co.uk/privacy"});
+			});
+		</script>
+		
+
+
+		 </body> {% endblock %} </html> {% endblock %}

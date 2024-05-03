@@ -24,6 +24,8 @@ $app->get('/alerts', 'UserFrosting\Sprinkle\Core\Controller\CoreController:jsonA
 
 $app->get('/legal', 'UserFrosting\Sprinkle\Core\Controller\CoreController:pageLegal');
 
+$app->get('/cookies', 'UserFrosting\Sprinkle\Core\Controller\CoreController:pageCookies');
+
 $app->get('/privacy', 'UserFrosting\Sprinkle\Core\Controller\CoreController:pagePrivacy');
 
 $app->get('/' . $config['assets.raw.path'] . '/{url:.+}', 'UserFrosting\Sprinkle\Core\Controller\CoreController:getAsset');

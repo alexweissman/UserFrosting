@@ -81,34 +81,65 @@ class GameweekController extends SimpleController
         //// Deal with Picks
 
         // Add No Pick team to those who didn't make a pick
+        //          BUG - Not applying a no pick if the person has a pick in a different league. Need to apply to current league only. 
+        //          Loop through leagues, then active players. Reset the variables each time.
         // loop through round users,
-        //      Issue - adding nopick to everyone
-        $rounds_np = Round::where('current_gameweek', $gameweek->id)
-            ->select('id')
-            ->get();
-        $round_users_np = RoundUser::whereIn('round_id', $rounds_np)
-            ->select('id', 'user_id')
-            ->get();
-        $noPickTeam = Team::where('team_name', 'No Pick')->first();
-        foreach ($round_users_np as $r) {
-            $p = Pick::where('gameweek_id', $gameweek->id)
-                ->where('user_id', $r->user_id)
+
+        // Get all leagues
+        $npLeague = League::get();
+
+        // Loop through each league
+        foreach($npLeague as $l){
+            $npRound = Round::where('league_id' , $l->id)
+                ->where('status', 'active')
+                ->get();
+            foreach ($npRound as $r) {
+                $npRoundUser = RoundUser::where('round_id', $r->id)
+                    ->where('user_status', 'active')
+                    ->get();
+                foreach ( $npRoundUser as $npru ) {
+                    $pick = Pick::where()
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+            // Get each active current Round for the current league. Join on Round User to get the users.
+            $npRoundUser = Round::where('league_id', $l->id)
+                ->where('round.status', 'active')
+                ->where('round.current_gameweek', $gameweek->id)
+                ->leftJoin('round_user', 'round_user.round_id', 'round.id')
+                ->get();
+            $noPickTeam = Team::where('team_name', 'No Pick')->first();
+            foreach($npRoundUser as $npru){
+                // See if they have a pick for the current round_user
+                // THIS IS THE ISSUE because looking for pick in current gameweek - need to be looking for current round instead
+                $p = Pick::where('gameweek_id', $gameweek->id)
+                ->where('user_id', $npru->user_id)
                 ->first();
-            // if they don't have a pick
-            if (!$p) {
-                // New pick - No Pick team
-                $np = new Pick([
-                    'gameweek_id' => $gameweek->id,
-                    'round_user_id' => $r->id,
-                    'team_id' => $noPickTeam->id,
-                    'user_id' => $currentUser->id,
-                    'result' => 'lost'
-                ]);
-                $np->save();
-                // mark the round_user as out
-                $ru = RoundUser::where('id', $r->id)->first();
-                $ru->user_status = 'out';
-                $ru->save();
+                // if they don't have a pick
+                if (!$p) {
+                    // New pick - No Pick team
+                    $np = new Pick([
+                        'gameweek_id' => $gameweek->id,
+                        'round_user_id' => $npru->id,
+                        'team_id' => $noPickTeam->id,
+                        'user_id' => $currentUser->id,
+                        'result' => 'lost'
+                    ]);
+                    $np->save();
+                    // mark the round_user as out
+                    $ru = RoundUser::where('id', $npru->id)->first();
+                    $ru->user_status = 'out';
+                    $ru->save();
+                }
             }
         }
         // End Adding No Pick

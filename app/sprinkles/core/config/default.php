@@ -109,6 +109,9 @@ return [
             // Regular expressions will be delimited with ~ in preg_match, so if you
             // have routes with ~ in them, you must escape this character in your regex.
             // Also, remember to use ^ when you only want to match the beginning of a URL path!
+            '/webhooks/receive' => [
+                'POST'
+            ],
         ],
     ],
 

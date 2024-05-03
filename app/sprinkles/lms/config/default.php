@@ -26,6 +26,25 @@ return [
         ],
     ],
 
+    'csrf' => [
+        'enabled'          => env('CSRF_ENABLED', true),
+        'name'             => 'csrf',
+        'storage_limit'    => 200,
+        'strength'         => 16,
+        'persistent_token' => true,
+        'blacklist'        => [
+            // A list of url paths to ignore CSRF checks on
+            // URL paths will be matched against each regular expression in this list.
+            // Each regular expression should map to an array of methods.
+            // Regular expressions will be delimited with ~ in preg_match, so if you
+            // have routes with ~ in them, you must escape this character in your regex.
+            // Also, remember to use ^ when you only want to match the beginning of a URL path!
+            '/webhooks/receive' => [
+                'POST'
+            ],
+        ],
+    ],
+
     /*
     * ----------------------------------------------------------------------
     * AuthorizationManager Debug

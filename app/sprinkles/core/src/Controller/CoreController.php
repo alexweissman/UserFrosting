@@ -69,6 +69,11 @@ class CoreController extends SimpleController
         return $this->ci->view->render($response, 'pages/legal.html.twig');
     }
 
+    public function pageCookies(Request $request, Response $response, $args)
+    {
+        return $this->ci->view->render($response, 'pages/cookies.html.twig');
+    }
+
     /**
      * Renders privacy page.
      * Request type: GET.

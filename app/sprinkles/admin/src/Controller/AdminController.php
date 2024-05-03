@@ -41,6 +41,12 @@ class AdminController extends SimpleController
         /** @var \UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface $currentUser */
         $currentUser = $this->ci->currentUser;
 
+        // make sure only master account can go on dashboard
+        if($currentUser->id != 1){
+            $leaguesPage = $this->ci->router->pathFor('leagues');
+            return $response->withRedirect($leaguesPage);
+        }
+
         // Access-controlled page
         if (!$authorizer->checkAccess($currentUser, 'uri_dashboard')) {
             throw new ForbiddenException();

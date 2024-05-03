@@ -29,6 +29,15 @@ use UserFrosting\Sprinkle\Core\Util\Captcha;
 use UserFrosting\Support\Exception\BadRequestException;
 use UserFrosting\Support\Exception\ForbiddenException;
 use UserFrosting\Support\Exception\NotFoundException;
+use UserFrosting\Sprinkle\Lms\Database\Models\Subscription;
+
+use UserFrosting\Sprinkle\Lms\Database\Models\League;
+use UserFrosting\Sprinkle\Lms\Database\Models\Round;
+use UserFrosting\Sprinkle\Lms\Database\Models\RoundUser;
+
+use UserFrosting\Sprinkle\Lms\Database\Models\MarketingConsent;
+use KlaviyoAPI\KlaviyoAPI;
+
 
 /**
  * Controller class for /account/* URLs.  Handles account-related activities, including login, registration, password recovery, and account settings.
@@ -417,7 +426,7 @@ class AccountController extends SimpleController
             throw $e;
         }
 
-        $ms->addMessageTranslated('success', 'WELCOME', $currentUser->toArray());
+        //$ms->addMessageTranslated('success', 'WELCOME', $currentUser->toArray());
 
         // Set redirect, if relevant
         $redirectOnLogin = $this->ci->get('redirect.onLogin');
@@ -510,9 +519,13 @@ class AccountController extends SimpleController
 
         // Redirect if user is already logged in
         if ($authenticator->check()) {
-            $redirect = $this->ci->get('redirect.onAlreadyLoggedIn');
 
-            return $redirect($request, $response, $args);
+            $leaguesPage = $this->ci->router->pathFor('leagues');
+            return $response->withRedirect($leaguesPage);
+
+
+            //$redirect = $this->ci->get('redirect.onAlreadyLoggedIn');
+            //  return $redirect($request, $response, $args);
         }
 
         // Load validation rules
@@ -720,9 +733,18 @@ class AccountController extends SimpleController
             $fields['hidden'][] = 'locale';
         }
 
+        $consent = MarketingConsent::where('user_id', $currentUser->id)->first();
+
+
+        $subscription = Subscription::where('user_id', $currentUser->id)->first();
+        $environment = env('environment');
+
         return $this->ci->view->render($response, 'pages/account-settings.html.twig', [
+            'environment' => $environment,
+            'subscription' => $subscription,
             'locales' => $locales,
             'fields'  => $fields,
+            'consent' => $consent,
             'page'    => [
                 'validators' => [
                     'account_settings'    => $validatorAccountSettings->rules('json', false),
@@ -759,9 +781,12 @@ class AccountController extends SimpleController
 
         // Redirect if user is already logged in
         if ($authenticator->check()) {
-            $redirect = $this->ci->get('redirect.onAlreadyLoggedIn');
+            $leaguesPage = $this->ci->router->pathFor('leagues');
+            return $response->withRedirect($leaguesPage);
 
-            return $redirect($request, $response, $args);
+            //$redirect = $this->ci->get('redirect.onAlreadyLoggedIn');
+
+            //return $redirect($request, $response, $args);
         }
 
         // Load validation rules
@@ -939,7 +964,10 @@ class AccountController extends SimpleController
         if ($authenticator->check()) {
             $ms->addMessageTranslated('danger', 'REGISTRATION.LOGOUT');
 
-            return $response->withJson([], 403);
+            $leaguesPage = $this->ci->router->pathFor('leagues');
+            return $response->withRedirect($leaguesPage);
+
+            //return $response->withJson([], 403);
         }
 
         // Load the request schema
@@ -1008,6 +1036,95 @@ class AccountController extends SimpleController
             // No verification required
             $ms->addMessageTranslated('success', 'REGISTRATION.COMPLETE_TYPE1');
         }
+
+        $klaviyo = new KlaviyoAPI(
+            'pk_79382b5640e6efb5387e0d28362b6ed032', 
+            $num_retries = 3, 
+            $wait_seconds = 3,
+            $guzzle_options = [],
+            $user_agent_suffix = "/FootballKnockout");
+
+
+        // If the registration form was submitted with a league code, try to join them to the league
+        // TO DO - make this call the post request instead so the logic is only in one place
+        if($params['league_joining_code']){
+            $league = League::where('join_code', $params['league_joining_code'])->first();
+            //check league exists
+            if ($league) {
+                $round = Round::where('league_id', $league->id)->first();
+                //check that not already a member of the league
+                $roundUsers = RoundUser::where('round_id', $round->id)->where('user_id', $user->id)->first();
+                if ($roundUsers) {
+                    //user is being a twat joining a league they're already in
+                    $ms = $this->ci->alerts;
+                    $ms->addMessage('danger', "Already a member of that league.");
+                } else {
+                    $round = Round::where('league_id', $league->id)->where('status', 'active')->first(); // only one round should be active per league
+                    // add user to the rounduser
+                    $roundUser = new RoundUser([
+                        'user_id' => $user->id,
+                        'round_id' => $round->id,
+                        'user_status' => 'active'
+                    ]);
+                    $roundUser->save();
+                    $ms = $this->ci->alerts;
+                    $ms->addMessage('success', "Joined league.");
+
+                    // TO DO - Klaviyo send joined_league event
+                }
+            } else {
+                //league joining code not found
+                $ms = $this->ci->alerts;
+                $ms->addMessage('danger', "Incorrect league joining code.");
+            }
+        }
+        /** END JOINING LEAGUE AS PART OF REGISTRATION */
+
+        /** Create Klaviyo Profile */
+        
+
+        $consent = MarketingConsent::where('user_id', $user->id)->first();
+
+        $profileData = [
+            'data' => [
+                'type' => 'profile',
+                'attributes' => [
+                    'email' => $user->email,
+                    'external_id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name
+                ]
+            ]
+        ];
+
+        $response1 = $klaviyo->Profiles->createProfile($profileData);
+
+        // Access the id and store it in a variable
+        $id = $response1['data']['id'];
+
+        $consent = new MarketingConsent([
+            'user_id' => $user->id,
+            'consented' => 1,
+            'klaviyo_id' => $id
+        ]);
+        $consent->save();
+
+        $profileData = [
+            'data' => [
+                [
+                    'type' => 'profile',
+                    'id' => $id,
+                ]
+            ]
+        ];
+        
+        //Subscribe and add to reminder list
+        $klaviyo->Lists->createListRelationships('SYfEFK', $profileData);
+        $klaviyo->Lists->createListRelationships('TSzka9', $profileData);
+
+
+        /** End creating Klaviyo Profile */
+
 
         return $response->withJson([], 200);
     }
@@ -1195,6 +1312,71 @@ class AccountController extends SimpleController
         return $response->withJson([], 200);
     }
 
+
+    public function marketing(Request $request, Response $response, $args){
+        /** @var \UserFrosting\Sprinkle\Core\Alert\AlertStream $ms */
+        $ms = $this->ci->alerts;
+
+        /** @var \UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
+        $authorizer = $this->ci->authorizer;
+
+        /** @var \UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface $currentUser */
+        $currentUser = $this->ci->currentUser;
+
+        // Access control for entire resource - check that the current user has permission to modify themselves
+        // See recipe "per-field access control" for dynamic fine-grained control over which properties a user can modify.
+        if (!$authorizer->checkAccess($currentUser, 'update_account_settings')) {
+            $ms->addMessageTranslated('danger', 'ACCOUNT.ACCESS_DENIED');
+
+            return $response->withJson([], 403);
+        }
+ 
+        $params = $request->getParsedBody();
+        $consent = MarketingConsent::where('user_id', $currentUser->id)->first();
+
+        $klaviyo = new KlaviyoAPI(
+            'pk_79382b5640e6efb5387e0d28362b6ed032', 
+            $num_retries = 3, 
+            $wait_seconds = 3,
+            $guzzle_options = [],
+            $user_agent_suffix = "/FootballKnockout");
+        
+        if(isset($params['input-marketing'])){
+            $consent->consented = 1;
+            // add to list
+            $profileData = [
+                'data' => [
+                    [
+                        'type' => 'profile',
+                        'id' => $consent->klaviyo_id,
+                    ]
+                ]
+            ];
+            //Subscribe and add to reminder list
+            $klaviyo->Lists->createListRelationships('SYfEFK', $profileData);
+            $klaviyo->Lists->createListRelationships('TSzka9', $profileData);
+
+        }else{
+            $consent->consented = 0;
+            // remove from list
+            $profileData = [
+                'data' => [
+                    [
+                        'type' => 'profile',
+                        'id' => $consent->klaviyo_id,
+                    ]
+                ]
+            ];
+            //Subscribe and add to reminder list
+            $klaviyo->Lists->deleteListRelationships('SYfEFK', $profileData);
+            $klaviyo->Lists->deleteListRelationships('TSzka9', $profileData);
+        }
+        $consent->save();
+
+        $settingsPage = $this->ci->router->pathFor('settings');
+        return $response->withRedirect($settingsPage);
+
+    }
     /**
      * Processes a request to update a user's account information.
      *

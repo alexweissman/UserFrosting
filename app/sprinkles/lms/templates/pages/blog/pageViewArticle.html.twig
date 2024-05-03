@@ -1,0 +1,44 @@
+{% extends "pages/abstract/fk-base.html.twig" %}
+{% block meta_seo %}
+<meta name="description" content="{{ article.meta_description}}">
+<meta name="keywords" content="{{ article.meta_keywords }}">
+<meta name="robots" content="follow, index">
+<link rel="canonical" href="https://football-knockout.co.uk/blog/{{article.slug}}">
+{% endblock %}
+{% block page_title %}Home{% endblock %}
+{% block content %}
+<!-- Main Body Wrapper -->
+<section id="wrapper" class="justify-between mx-auto max-w-7xl">
+	<div id="hero" class="relative">
+		<img src="{{ assets.url('assets://brand/images/top-pitch-image.png')}}" class="absolute object-cover w-full relative">
+		<div class="absolute flex w-full h-full top-0 px-32 align-center items-center justify-between">
+			<div>
+				<h1 class="text-xl md:text-3xl text-white py-1" style="font-family: 'MangueiraHeavy';">{{article.title}}</h1>
+				<h2 class="text-lg md:text-2xl text-white mt-4 py-1" style="font-family: 'Mangueira';">{{article.subtitle}}</h2>
+			</div>
+		</div>
+	</div>
+	<div class="px-10">
+		<div class="my-10">
+			{{ article.article | raw}}
+		</div>
+		<div class="my-10">
+			{{ article.meta_keywords}}
+		</div>
+		<div class="my-10">
+			{{ article.created_at | date("dS F Y")}}
+		</div>
+		<a href="{{site.uri.public}}/blog">
+			<button  class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider transition-colors duration-400 ease-in-out hover:bg-[#5a3560]">
+				Back to Blog
+			</button>
+		</a>
+	</div>
+	
+	
+
+</div>
+<!-- End Main Body Wrapper -->
+
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+<form id="account-settings" role="form" action="{{site.uri.public}}/account/marketing" method="post">
+
+        {% include "forms/csrf.html.twig" %}
+
+        {% block settings_profile %}
+            <input type="text" style="display:none">
+            <input type="password" style="display:none">
+            <div class="flex  space-x-2 my-5">
+                <input type="checkbox" name="input-marketing" id="input-marketing" {% if consent.consented == 1 %}checked="checked" checked{% endif %} />
+                <label for="input-marketing" class="text-gray-700" >Receive gameweek reminders and other marketing emails</label>
+            </div>
+        {% endblock %}
+    <div class="">
+        <button type="submit" class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-fullpx-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full">{{translate('SAVE')}}</button>
+    </div>
+</form>

@@ -36,7 +36,9 @@
         "wikimedia/composer-merge-plugin": "^2.1.0",
         "sentry/sentry": "^4.4",
         "slim/slim": "3.12",
-        "slim/psr7": "^1.6"
+        "slim/psr7": "^1.6",
+        "stripe/stripe-php": "^13.16",
+        "klaviyo/api": "^7.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.13",

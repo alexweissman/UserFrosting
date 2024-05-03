@@ -31,6 +31,7 @@ class RoundUser extends Model
     protected $fillable = [
         'user_id',
         'round_id',
-        'user_status'
+        'user_status',
+        'paid_entry_fee'
     ];
 }

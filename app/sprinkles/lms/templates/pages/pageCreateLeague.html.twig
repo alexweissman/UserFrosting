@@ -1,5 +1,6 @@
 {% extends "pages/abstract/fk-base.html.twig" %}
-{% block page_title %}Create League{% endblock %}
+{% block page_title %}Create League
+{% endblock %}
 {% block content %}
 
 	<section class="mx-auto w-full ">
@@ -16,22 +17,35 @@
 					<form class="space-y-5" method="POST" action="{{site.uri.public}}/leagues/create-league">
 						{% include "forms/csrf.html.twig" %}
 						<div class="flex flex-col space-y-2">
-							<label class="text-gray-700">League Name</label>
+							<label class="text-gray-700">League Name*</label>
 							<input type="text" name="league_name" class="border border-gray-300 px-2 py-2 rounded-md border-[#331E36]" required/>
 						</div>
 						<div class="flex flex-col space-y-2">
-							<label class="text-gray-700">Start Gameweek</label>
+							<label class="text-gray-700">Start Gameweek*</label>
 							<select required name="start_gameweek" class="border border-gray-300 px-5 py-2 rounded border-[#331E36]">
 								{% for gameweek in gameweeks %}
-									<option value="{{gameweek.id}}">{{gameweek.gameweek_number}}</option>
+									<option value="{{gameweek.id}}">{{gameweek.gameweek_number}}
+										- Starts
+										{{gameweek.deadline | date("dS F Y")}}</option>
 								{% endfor %}
 							</select>
+						</div>
+						<div class="flex flex-col space-y-2">
+							<label class="text-gray-700">Entry Fee</label>
+							<div class="relative mt-2 rounded-md shadow-sm">
+								<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+									<span class="text-gray-500 sm:text-sm">£</span>
+								</div>
+								<input type="text" name="entry_fee" id="entry_fee" class="block w-full rounded-md pl-7 placeholder:text-gray-400 border border-gray-300 py-2 rounded-md border-[#331E36]" placeholder="10" aria-describedby="price-currency">
+							</div>
+							<p class="text-xs text-gray-700">Optional. Keep track of who's paid for each Round.</p>
 						</div>
 						<button class="px-4 py-2 rounded-md bg-[#331E36]  border border-[#331E36] text-white text-sm font-semibold uppercase tracking-wider w-full">
 							<p>Create</p>
 						</button>
 					</form>
-
 				</div>
-			</section>
-		{% endblock %}
+			</div>
+		</div>
+	</section>
+{% endblock %}

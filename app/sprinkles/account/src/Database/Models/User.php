@@ -266,7 +266,7 @@ class User extends Model implements UserInterface
      * Get the amount of time, in seconds, that has elapsed since the last activity of a certain time for this user.
      *
      * @param string $type The type of activity to search for.
-     *
+     * 
      * @return int
      */
     public function getSecondsSinceLastActivity($type)
@@ -366,10 +366,10 @@ class User extends Model implements UserInterface
     public function onLogin($params = [])
     {
         // Add a sign in activity (time is automatically set by database)
-        static::$ci->userActivityLogger->info("User {$this->user_name} signed in.", [
-            'type' => 'sign_in',
-        ]);
-
+        /* static::$ci->userActivityLogger->info("User {$this->user_name} signed in.", [
+        //'type' => 'sign_in',
+        ]); */
+    
         // Update password if we had encountered an outdated hash
         $passwordType = Password::getHashType($this->password);
 

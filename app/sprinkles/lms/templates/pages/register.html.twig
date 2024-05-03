@@ -9,7 +9,7 @@
 			<div class="rounded-xl bg-gradient-to-r from-[#ACFC7A] via-[#9FF3A9] to-[#9CECD5] p-1 w-full sm:w-full md:w-3/4 lg:w-1/2 mx-auto shadow-lg">
 				<div class="bg-gray-50 rounded-lg p-10">
 					<h1 class="text-[#331E36] font-semibold text-4xl tracking-tight w-full text-center" style="font-family: 'MangueiraSemiBold';">{{translate('REGISTER')}}</h1>
-					<div id="alerts"></div>
+					<div id="alerts" class="mt-3"></div>
 					<form id="register" role="form" action="{{site.uri.public}}/account/register" method="post" class="flex flex-col space-y-5 r-form">
 						{% include "forms/csrf.html.twig" %}
 						<div class="flex flex-col space-y-1">
@@ -22,7 +22,7 @@
 						</div>
 						<div class="flex flex-col space-y-1">
 							<label class="text-gray-700" for="r-form-email">Email</label>
-							<input type="text" name="email" required="required" placeholder="{% if site.registration.require_email_verification %}{{translate('EMAIL.VERIFICATION_REQUIRED')}}{% else %}{{translate('EMAIL.YOUR')}}{% endif %}" class="border border-gray-300 px-2 py-2 rounded-md" id="r-form-email">
+							<input type="text" name="email" required="required" placeholder="Enter your email, you'll log in with this" class="border border-gray-300 px-2 py-2 rounded-md" >
 						</div>
 						<div class="flex flex-col space-y-1">
 							<label for="r-form-username" class="text-gray-700">{{translate('USERNAME')}}</label>
@@ -35,6 +35,10 @@
 						<div class="flex flex-col space-y-1">
 							<label class="text-gray-700" for="r-form-passwordc">{{translate('PASSWORD.CONFIRM')}}</label>
 							<input type="password" name="passwordc" required="required" placeholder="{{translate('PASSWORD.CONFIRM')}}" class="border border-gray-300 px-2 py-2 rounded-md" id="r-form-passwordc">
+						</div>
+						<div class="flex flex-col space-y-1">
+							<label class="text-gray-700" for="league_joining_code">Got a code to join a league?</label>
+							<input type="text" name="league_joining_code" placeholder="S9mrWyhD" class="border border-gray-300 px-2 py-2 rounded-md" id="r-form-join">
 						</div>
 						{% if 'locale' not in fields.hidden %}
 
@@ -110,6 +114,18 @@
         } 
       }
 
+		function getJoinCode(){
+			console.log(decodeURI(window.location.href));
+			console.log(decodeURIComponent(window.location.href))
+
+			const searchParams = new URLSearchParams(window.location.search);
+			if(searchParams.has('join_code')){
+				console.log(searchParams.get('join_code'));
+				document.getElementById('r-form-join').value=searchParams.get('join_code');
+			}
+		}
+		window.onload = getJoinCode();
+    
       // Take over form submission
       form.addEventListener("submit", (event) => {
         event.preventDefault();
