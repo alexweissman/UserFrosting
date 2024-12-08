@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    backupGlobals="false" 
+    bootstrap="vendor/autoload.php" 
+    colors="true" 
+    processIsolation="false" 
+    stderr="true" 
+    stopOnFailure="false" 
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" 
+    cacheDirectory=".phpunit.cache" 
+    backupStaticProperties="false"
+>
+  <coverage includeUncoveredFiles="true">
+    <report>
+      <clover outputFile="_meta/coverage.xml"/>
+      <html outputDirectory="_meta/coverage"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="Unit Tests">
+      <directory suffix="Test.php">app/tests</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <env name="UF_MODE" value="testing"/>
+  </php>
+  <source>
+    <include>
+      <directory suffix=".php">app/src/</directory>
+    </include>
+  </source>
+</phpunit>

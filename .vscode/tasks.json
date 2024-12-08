@@ -1,0 +1,120 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "PHPUnit",
+            "type": "shell",
+            "options": {
+                "env": {
+                    "XDEBUG_CONFIG": "idekey=VSCODE"
+                }
+            },
+            "command": "printf '\\33c\\e[3J' && vendor/bin/phpunit",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "PHP CS Fixer",
+            "type": "shell",
+            "command": "vendor/bin/php-cs-fixer fix",
+            "problemMatcher": []
+        },
+        {
+            "label": "Bake",
+            "type": "shell",
+            "options": {},
+            "command": "php bakery bake",
+            "problemMatcher": [],
+        },
+        {
+            "label": "PHPStan",
+            "type": "shell",
+            "command": "vendor/bin/phpstan analyse app/src/ app/tests/ --memory-limit=4G",
+            "problemMatcher": []
+        },
+        {
+            "label": "Serve",
+            "type": "shell",
+            "options": {},
+            "command": "php bakery serve",
+            "problemMatcher": []
+        },
+        {
+            "label": "npm install",
+            "type": "shell",
+            "options": {},
+            "command": "npm install",
+            "problemMatcher": []
+        },
+        {
+            "label": "npm update",
+            "type": "shell",
+            "options": {},
+            "command": "npm update",
+            "problemMatcher": []
+        },
+        {
+            "label": "webpack:dev",
+            "type": "shell",
+            "options": {},
+            "command": "npm run webpack:dev",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "webpack:server (HMR)",
+            "type": "shell",
+            "options": {},
+            "command": "npm run webpack:server",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "webpack:watch",
+            "type": "shell",
+            "options": {},
+            "command": "npm run webpack:watch",
+            "problemMatcher": []
+        },
+        {
+            "label": "webpack:build",
+            "type": "shell",
+            "options": {},
+            "command": "npm run webpack:build",
+            "problemMatcher": []
+        },
+        {
+            "label": "lint",
+            "type": "shell",
+            "options": {},
+            "command": "npm run lint",
+            "problemMatcher": []
+        },
+        {
+            "label": "format",
+            "type": "shell",
+            "options": {},
+            "command": "npm run format",
+            "problemMatcher": []
+        },
+        {
+            "label": "vite:dev",
+            "type": "shell",
+            "options": {},
+            "command": "npm run vite:dev",
+            "problemMatcher": []
+        },
+        {
+            "label": "vite:build",
+            "type": "shell",
+            "options": {},
+            "command": "npm run vite:build",
+            "problemMatcher": []
+        }
+    ]
+}

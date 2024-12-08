@@ -1,0 +1,42 @@
+# Ignores Mac metadata.  You can configure this globally if you use a Mac: http://islegend.com/development/setting-global-gitignore-mac-windows/
+.DS_Store
+
+# Ignore developer resources
+_meta/
+
+# Ignore personal config files (dev)
+app/.env
+
+# Ignore lock files
+composer.lock
+
+# Ignore log, cache, sessions and storage directories
+app/cache/*
+app/database/*
+app/logs/*
+app/sessions/*
+app/storage/*
+
+# Unignore log, cache, sessions and storage .gitkeeps
+!app/cache/.gitkeep
+!app/database/.gitkeep
+!app/logs/.gitkeep
+!app/sessions/.gitkeep
+!app/storage/.gitkeep
+
+# Ignore Composer vendor
+vendor/
+
+# Ignore node modules
+node_modules/
+
+# Ignore compiled assets
+public/assets/
+public/.vite/
+
+# Ignore dev utility cache
+.phpunit.cache
+.php_cs.cache
+
+# Ignore api doc
+api/

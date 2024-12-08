@@ -1,0 +1,50 @@
+{
+    "name": "userfrosting",
+    "type": "module",
+    "dependencies": {
+        "@userfrosting/sprinkle-account": "git+https://github.com/userfrosting/sprinkle-account.git#6.0",
+        "@userfrosting/sprinkle-admin": "git+https://github.com/userfrosting/sprinkle-admin.git#6.0",
+        "@userfrosting/sprinkle-core": "git+https://github.com/userfrosting/sprinkle-core.git#6.0",
+        "@userfrosting/theme-pink-cupcake": "git+https://github.com/userfrosting/theme-pink-cupcake.git",
+        "axios": "^1.5.0",
+        "pinia": "^2.1.6",
+        "pinia-plugin-persistedstate": "^3.2.0",
+        "vue": "^3.3.4",
+        "vue-router": "^4.2.4"
+    },
+    "devDependencies": {
+        "@rushstack/eslint-patch": "^1.8.0",
+        "@symfony/webpack-encore": "^4.4.0",
+        "@tsconfig/node20": "^20.1.4",
+        "@types/node": "^20.12.5",
+        "@types/uikit": "^3.14.5",
+        "@vitejs/plugin-vue": "^5.0.4",
+        "@vue/eslint-config-prettier": "^9.0.0",
+        "@vue/eslint-config-typescript": "^13.0.0",
+        "@vue/tsconfig": "^0.5.1",
+        "eslint": "^8.57.0",
+        "eslint-plugin-vue": "^9.23.0",
+        "file-loader": "^6.2.0",
+        "fork-ts-checker-webpack-plugin": "^9.0.2",
+        "less-loader": "^11.1.3",
+        "npm-run-all2": "^6.1.2",
+        "prettier": "^3.2.5",
+        "ts-loader": "^9.5.1",
+        "typescript": "^5.4.5",
+        "vite": "^5.2.8",
+        "vite-plugin-vue-devtools": "^7.5.4",
+        "vue-loader": "^17.2.2",
+        "vue-tsc": "^2.1.10",
+        "webpack-notifier": "^1.15.0"
+    },
+    "scripts": {
+        "webpack:server": "encore dev-server --port 9000",
+        "webpack:dev": "encore dev",
+        "webpack:watch": "encore dev --watch",
+        "webpack:build": "encore production --progress",
+        "vite:dev": "vite",
+        "vite:build": "vue-tsc && vite build",
+        "lint": "eslint app/assets/ --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+        "format": "prettier --write app/assets/"
+    }
+}

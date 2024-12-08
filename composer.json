@@ -1,0 +1,56 @@
+{
+    "name": "userfrosting/userfrosting",
+    "type": "project",
+    "description": "A secure, modern user management system for PHP.",
+    "keywords": ["php user management", "userfrosting", "php", "login", "web-framework", "user-management", "login-system", "login"],
+    "homepage": "https://github.com/userfrosting/UserFrosting",
+    "license" : "MIT",
+    "authors" : [
+        {
+            "name": "Alexander Weissman",
+            "homepage": "https://alexanderweissman.com"
+        },
+        {
+            "name": "Louis Charette",
+            "homepage": "https://bbqsoftwares.com"
+        },
+        {
+            "name": "Jordan Mele",
+            "email": "SiliconSoldier@outlook.com.au",
+            "homepage": "https://djmm.me"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "ext-gd": "*",
+        "userfrosting/framework": "~6.0.0@dev",
+        "userfrosting/sprinkle-core": "~6.0.0@dev",
+        "userfrosting/sprinkle-account": "~6.0.0@dev",
+        "userfrosting/sprinkle-admin": "~6.0.0@dev"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpstan/phpstan": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-mockery": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpstan/phpstan-strict-rules": "^1.0",
+        "phpunit/phpunit": "^10.5",
+        "mockery/mockery": "^1.2",
+        "league/factory-muffin": "^3.0",
+        "league/factory-muffin-faker": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "UserFrosting\\App\\": "app/src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UserFrosting\\Tests\\App\\": "app/tests/"
+        }
+    },
+    "scripts": {
+        "post-create-project-cmd" : "php bakery bake"
+    }
+}
