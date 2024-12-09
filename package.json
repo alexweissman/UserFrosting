@@ -1,5 +1,6 @@
 {
     "name": "userfrosting",
+    "private": true,
     "type": "module",
     "dependencies": {
         "@userfrosting/sprinkle-account": "^6.0.0-alpha",
