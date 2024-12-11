@@ -39,6 +39,7 @@
         "webpack-notifier": "^1.15.0"
     },
     "scripts": {
+        "typecheck": "vue-tsc --noEmit",
         "webpack:server": "encore dev-server --port 9000",
         "webpack:dev": "encore dev",
         "webpack:watch": "encore dev --watch",
