@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { usePageMeta } from '@userfrosting/sprinkle-core/composables'
+const page = usePageMeta()
+
+// Hide the title on this page
+onMounted(() => {
+    page.hideTitle = true
+})
+</script>
 <template>
     <h1>This is an about page</h1>
     <p>
