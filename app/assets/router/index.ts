@@ -30,31 +30,9 @@ const router = createRouter({
             ]
         },
         {
-            path: '',
+            path: '/admin',
             component: () => import('../layouts/LayoutDashboard.vue'),
-            children: [
-                ...AdminRoutes,
-                {
-                    path: '/test',
-                    meta: {
-                        auth: {
-                            redirect: { name: 'account.login' }
-                        }
-                    },
-                    children: [
-                        {
-                            path: '',
-                            name: 'test',
-                            component: () => import('../views/TestView.vue')
-                        },
-                        {
-                            path: 't/:slug',
-                            name: 'test.slug',
-                            component: () => import('../views/TestViewDetail.vue')
-                        }
-                    ]
-                }
-            ]
+            children: [...AdminRoutes]
         }
     ]
 })

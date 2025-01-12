@@ -7,9 +7,8 @@ import { SidebarMenuItems } from '@userfrosting/sprinkle-admin/components'
 <template>
     <NavBar />
     <UFSideBar>
-        <UFSideBarLabel label="NAVIGATION" />
+        <UFSideBarLabel label="Admin Panel" />
         <SidebarMenuItems />
-        <UFSideBarItem :to="{ name: 'test' }" faIcon="person-digging" label="Test" />
     </UFSideBar>
     <UFMainContent>
         <RouterView />

@@ -23,7 +23,7 @@ const auth = useAuthStore()
             :avatar="auth.user.avatar"
             :meta="auth.user.user_name">
             <UFNavBarUserCardButton
-                label="Dashboard"
+                label="Admin Panel"
                 @click="router.push({ name: 'admin.dashboard' })" />
             <UFNavBarUserCardButton
                 label="My Account"
