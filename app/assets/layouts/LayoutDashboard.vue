@@ -11,6 +11,7 @@ import { SidebarMenuItems } from '@userfrosting/sprinkle-admin/components'
         <SidebarMenuItems />
     </UFSideBar>
     <UFMainContent>
+        <UFHeaderPage />
         <RouterView />
     </UFMainContent>
     <FooterContent />
