@@ -19,9 +19,6 @@ const router = createRouter({
                     path: '/about',
                     name: 'about',
                     meta: {
-                        auth: {
-                            redirect: { name: 'account.login' }
-                        },
                         title: 'About'
                     },
                     component: () => import('../views/AboutView.vue')
