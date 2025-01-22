@@ -2,10 +2,19 @@
     "name": "userfrosting/userfrosting",
     "type": "project",
     "description": "A secure, modern user management system for PHP.",
-    "keywords": ["php user management", "userfrosting", "php", "login", "web-framework", "user-management", "login-system", "login"],
+    "keywords": [
+        "php user management",
+        "userfrosting",
+        "php",
+        "login",
+        "web-framework",
+        "user-management",
+        "login-system",
+        "login"
+    ],
     "homepage": "https://github.com/userfrosting/UserFrosting",
-    "license" : "MIT",
-    "authors" : [
+    "license": "MIT",
+    "authors": [
         {
             "name": "Alexander Weissman",
             "homepage": "https://alexanderweissman.com"
@@ -23,10 +32,10 @@
     "require": {
         "php": "^8.1",
         "ext-gd": "*",
-        "userfrosting/framework": "~6.0.0@dev",
-        "userfrosting/sprinkle-core": "~6.0.0@dev",
-        "userfrosting/sprinkle-account": "~6.0.0@dev",
-        "userfrosting/sprinkle-admin": "~6.0.0@dev"
+        "userfrosting/framework": "^6.0",
+        "userfrosting/sprinkle-core": "^6.0",
+        "userfrosting/sprinkle-account": "^6.0",
+        "userfrosting/sprinkle-admin": "^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -40,6 +49,8 @@
         "league/factory-muffin": "^3.0",
         "league/factory-muffin-faker": "^2.0"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "UserFrosting\\App\\": "app/src"
@@ -51,6 +62,6 @@
         }
     },
     "scripts": {
-        "post-create-project-cmd" : "php bakery bake"
+        "post-create-project-cmd": "php bakery bake"
     }
 }
