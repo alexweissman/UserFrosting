@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { usePageMeta } from '@userfrosting/sprinkle-core/composables'
+import { useTranslator } from '@userfrosting/sprinkle-core/stores'
+const { $t } = useTranslator()
 const page = usePageMeta()
 
 // Hide the title on this page
@@ -9,7 +11,7 @@ onMounted(() => {
 })
 </script>
 <template>
-    <h1>This is an about page</h1>
+    <h1>{{ $t('ABOUT') }}</h1>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
         labore et dolore magna aliqua. Sit amet luctus venenatis lectus magna. In hac habitasse

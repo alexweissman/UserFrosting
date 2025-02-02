@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { DateTime } from 'luxon'
 import { useAuthStore } from '@userfrosting/sprinkle-account/stores'
 import { useConfigStore, useTranslator } from '@userfrosting/sprinkle-core/stores'
 
 const auth = useAuthStore()
 const config = useConfigStore()
-const { $t } = useTranslator()
+const { $t, $tdate } = useTranslator()
 
 const helloMsg = computed(() => {
     return $t('WELCOME_TO', {
@@ -18,25 +19,66 @@ const helloMsg = computed(() => {
 <template>
     <article class="uk-article">
         <h1 class="uk-article-title">{{ helloMsg }}</h1>
-        <p class="uk-article-meta">
-            Written by <a href="#">Angela Davis</a>, Professor on 29 September 2018.
+        <p class="uk-article-meta">{{ $tdate(DateTime.now().toISO()) }}</p>
+        <p class="uk-text-lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.
         </p>
-        <p class="uk-text-lead">
-            This is a demo of UserFrosting using a custom UiKit based template built using Vue 3.0
-        </p>
-        <p>All the content below is just for example and I've not added any functionality.</p>
 
         <div class="uk-grid-small uk-child-width-auto" uk-grid>
             <div>
                 <a class="uk-button uk-button-text" href="#">Read more</a>
             </div>
-            <div>
-                <a class="uk-button uk-button-text" href="#">5 Comments</a>
-            </div>
         </div>
     </article>
 
-    <div style="padding-top: 25px; padding-bottom: 25px"></div>
+    <hr class="uk-divider-icon" style="padding-top: 25px; padding-bottom: 25px" />
+
+    <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
+        <div>
+            <div class="uk-card uk-card-hover uk-card-body">
+                <h3 class="uk-card-title">Lorem ipsum</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+        </div>
+        <div>
+            <div class="uk-card uk-card-hover uk-card-body">
+                <h3 class="uk-card-title">Lorem ipsum</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+        </div>
+        <div>
+            <div class="uk-card uk-card-hover uk-card-body">
+                <h3 class="uk-card-title">Lorem ipsum</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+        </div>
+        <div>
+            <div class="uk-card uk-card-hover uk-card-body">
+                <h3 class="uk-card-title">Lorem ipsum</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding-top: 25px"></div>
 
     <table class="uk-table uk-table-divider">
         <thead>
@@ -64,35 +106,4 @@ const helloMsg = computed(() => {
             </tr>
         </tbody>
     </table>
-
-    <hr class="uk-divider-icon" style="padding-top: 25px; padding-bottom: 25px" />
-
-    <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
-        <div>
-            <div class="uk-card uk-card-hover uk-card-body">
-                <h3 class="uk-card-title">Hover</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </div>
-        </div>
-        <div>
-            <div class="uk-card uk-card-hover uk-card-body">
-                <h3 class="uk-card-title">Hover</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </div>
-        </div>
-        <div>
-            <div class="uk-card uk-card-hover uk-card-body">
-                <h3 class="uk-card-title">Hover</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </div>
-        </div>
-        <div>
-            <div class="uk-card uk-card-hover uk-card-body">
-                <h3 class="uk-card-title">Hover</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </div>
-        </div>
-    </div>
-
-    <div style="padding-top: 50px"></div>
 </template>

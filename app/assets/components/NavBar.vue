@@ -1,18 +1,23 @@
 <script setup>
-import { useAuthStore } from '@userfrosting/sprinkle-account/stores'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@userfrosting/sprinkle-account/stores'
+import { useConfigStore, useTranslator } from '@userfrosting/sprinkle-core/stores'
 const router = useRouter()
+const config = useConfigStore()
 
 // Logout API variables
 const auth = useAuthStore()
+
+// Translator
+const { $t } = useTranslator()
 </script>
 
 <template>
-    <UFNavBar title="Userfrosting" :to="{ name: 'home' }">
-        <UFNavBarItem :to="{ name: 'about' }" label="About" />
+    <UFNavBar :title="config.get('site.title')" :to="{ name: 'home' }">
+        <UFNavBarItem :to="{ name: 'about' }" :label="$t('ABOUT')" />
         <UFNavBarItem
             :to="{ name: 'account.register' }"
-            label="Register"
+            :label="$t('REGISTER')"
             v-if="!auth.isAuthenticated" />
         <UFNavBarLogin
             v-if="!auth.isAuthenticated"
@@ -23,8 +28,8 @@ const auth = useAuthStore()
             :avatar="auth.user.avatar"
             :meta="auth.user.user_name">
             <UFNavBarUserCardButton label="Admin Panel" :to="{ name: 'admin.dashboard' }" />
-            <UFNavBarUserCardButton label="My Account" :to="{ name: 'account.settings' }" />
-            <UFNavBarUserCardButton label="Logout" @click="auth.logout()" />
+            <UFNavBarUserCardButton :label="$t('ACCOUNT.MY')" :to="{ name: 'account.settings' }" />
+            <UFNavBarUserCardButton :label="$t('LOGOUT')" @click="auth.logout()" />
         </UFNavBarUserCard>
     </UFNavBar>
 </template>

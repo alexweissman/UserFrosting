@@ -19,7 +19,7 @@ const router = createRouter({
                     path: '/about',
                     name: 'about',
                     meta: {
-                        title: 'About'
+                        title: 'ABOUT'
                     },
                     component: () => import('../views/AboutView.vue')
                 },
@@ -32,7 +32,7 @@ const router = createRouter({
             component: () => import('../layouts/LayoutDashboard.vue'),
             children: [...AdminRoutes],
             meta: {
-                title: 'Admin'
+                title: 'ADMIN'
             }
         }
     ]
