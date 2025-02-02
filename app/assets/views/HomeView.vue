@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAuthStore } from '@userfrosting/sprinkle-account/stores'
+import { useConfigStore, useTranslator } from '@userfrosting/sprinkle-core/stores'
 
 const auth = useAuthStore()
+const config = useConfigStore()
+const { $t } = useTranslator()
 
 const helloMsg = computed(() => {
-    return auth.isAuthenticated ? 'Hello ' + auth.user?.full_name + '!' : 'Hello guest !'
+    return $t('WELCOME_TO', {
+        title: config.get('site.title'),
+        user: auth.user?.full_name ?? '&GUEST'
+    })
 })
 </script>
 
 <template>
     <article class="uk-article">
-        <h1 class="uk-article-title">
-            <a class="uk-link-reset" href="#">{{ helloMsg }}</a>
-        </h1>
+        <h1 class="uk-article-title">{{ helloMsg }}</h1>
         <p class="uk-article-meta">
             Written by <a href="#">Angela Davis</a>, Professor on 29 September 2018.
         </p>
