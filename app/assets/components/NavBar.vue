@@ -1,15 +1,12 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@userfrosting/sprinkle-account/stores'
-import { useConfigStore, useTranslator } from '@userfrosting/sprinkle-core/stores'
+import { useConfigStore } from '@userfrosting/sprinkle-core/stores'
 const router = useRouter()
 const config = useConfigStore()
 
 // Logout API variables
 const auth = useAuthStore()
-
-// Translator
-const { $t } = useTranslator()
 </script>
 
 <template>

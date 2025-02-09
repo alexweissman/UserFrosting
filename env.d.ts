@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="@userfrosting/sprinkle-core" />
 /// <reference types="@userfrosting/theme-pink-cupcake/components" />
 /**
  * This is required for webpack to correctly import vue file when using TypeScript.

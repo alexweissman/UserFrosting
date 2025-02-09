@@ -6,10 +6,10 @@ import { useConfigStore, useTranslator } from '@userfrosting/sprinkle-core/store
 
 const auth = useAuthStore()
 const config = useConfigStore()
-const { $t, $tdate } = useTranslator()
+const { translate } = useTranslator()
 
 const helloMsg = computed(() => {
-    return $t('WELCOME_TO', {
+    return translate('WELCOME_TO', {
         title: config.get('site.title'),
         user: auth.user?.full_name ?? '&GUEST'
     })

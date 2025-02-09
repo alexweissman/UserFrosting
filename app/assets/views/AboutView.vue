@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { usePageMeta } from '@userfrosting/sprinkle-core/composables'
-import { useTranslator } from '@userfrosting/sprinkle-core/stores'
-const { $t } = useTranslator()
 const page = usePageMeta()
 
 // Hide the title on this page
